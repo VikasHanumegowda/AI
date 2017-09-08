@@ -13,7 +13,7 @@ if __name__ == "__main__":
     matrix1 = [[0 for x in range(n)] for x in range(n)]
 
     for x in range(n):  # first column possible positions of Q
-        q1.append(tuple([0, x, matrix1]))
+        q1.append(tuple([0, x, matrix1, 0]))
 
     nqueens1 = 0
 
@@ -33,13 +33,13 @@ if __name__ == "__main__":
             row = node[0]
             col = node[1]
             matrix = node[2]
-
+            nqueens1 = node[3]
             print(row, col)
             matrix[row][col] = 'Q'
-            nqueens += 1
-            if nqueens == p:
+            nqueens1 += 1
+            if nqueens1 == p:
                 print("Success")
-                return nqueens
+                return nqueens1
 
             for x in range(n):  # to sides
                 if type(matrix[row][x]) != str and x != col:
@@ -88,19 +88,20 @@ if __name__ == "__main__":
             for x in range(n):  # append all 0 valued cells into Q
                 if matrix[row + 1][x] == 0:
                     propagation_possible += 1
-                    q.append(tuple([row + 1, x, matrix]))
+                    q.append(tuple([row + 1, x, matrix, nqueens1+1]))
 
             if propagation_possible == 0:
                 continue
 
             print(q)
             if row == n - 1:
-                if nqueens != p:
+                if nqueens1 != p:
                     print("No solutions")
                     continue
 
 
-    dfs(q1)
+    print_matrix(matrix1)
+    numberq = dfs(q1)
 
     if numberq == -1:
         print("Failure")
