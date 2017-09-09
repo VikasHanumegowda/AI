@@ -6,7 +6,7 @@ if __name__ == "__main__":
     f.readline()  # for the first line retrieval
     n = int(f.readline().strip())  # Size of square board
     p = int(f.readline().strip())  # Number of Queens
-
+    print(n)
     # n vs p check (TO BE DONE)
     start = time.time()
     q1 = deque()
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     matrix1 = [[0 for x in range(n)] for x in range(n)]
 
     for x in range(n):  # first column possible positions of Q
-        q1.insert(0, tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
+        q1.append(tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
 
     nqueens1 = 0
 
@@ -78,10 +78,18 @@ if __name__ == "__main__":
                     print_matrix(matrix)
                     return nqueens1
 
+            propagation_possible = 0
+
             for x in range(n):  # append all 0 valued cells into Q
                 if matrix[row + 1][x] == 0:
-                    q.insert(0, tuple([row + 1, x, [[y for y in xx] for xx in matrix], nqueens1]))
+                    propagation_possible += 1
+                    q.append(tuple([row + 1, x, [[y for y in xx] for xx in matrix], nqueens1]))
 
+            if propagation_possible == 0:
+                continue
+            print_matrix(matrix)
+            print()
+                # print(nqueens1)
         return -1
 
 
