@@ -35,6 +35,12 @@ if __name__ == "__main__":
                 print(eachcolumn, end=' ')
             print()
 
+    # def print_output(martrix):
+    #     for eachrow in matrix:
+    #         for eachcolumn in eachrow:
+    #             print(eachcolumn, end=' ')
+    #         print()
+
 
     def bfs(q, p, mm):
         if p == 0:
@@ -121,7 +127,7 @@ if __name__ == "__main__":
                     if row < n - 1:
                         if matrix[row + 1][x] == 0:
                             q.insert(0, tuple([row + 1, x, [[y for y in xx] for xx in matrix], nqueens1]))
-                # print_matrix(matrix)
+                print_matrix(matrix)
 
                 # print([[x[:2]] for x in q])
                 print(len(q))
