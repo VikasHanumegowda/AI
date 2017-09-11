@@ -7,11 +7,10 @@ if __name__ == "__main__":
     f.readline()  # for the first line retrieval
     n = int(f.readline().strip())  # Size of square board
     p = int(f.readline().strip())  # Number of Queens
-    print(n)
 
     # n vs p check (TO BE DONE)
     matrix1 = []
-    for x in range(n):
+    for x in range(n):#generate state matrix
         matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
     # for eachrow in matrix1:
     #     for eachcolumn in eachrow:
@@ -24,7 +23,7 @@ if __name__ == "__main__":
     # matrix1 = [[0 for x in range(n)] for x in range(n)]
 
     for x in range(n):  # first column possible positions of Q
-        q1.append(tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
+        q1.insert(0, tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
 
     nqueens1 = 0
 
@@ -35,14 +34,20 @@ if __name__ == "__main__":
                 print(eachcolumn, end=' ')
             print()
 
-    # def print_output(martrix):
-    #     for eachrow in matrix:
-    #         for eachcolumn in eachrow:
-    #             print(eachcolumn, end=' ')
-    #         print()
+    def print_output(matrix):
+        for eachrow in matrix:
+            for eachcolumn in eachrow:
+                if eachcolumn == 'T':
+                    print(2, end=' ')
+                elif eachcolumn == 'Q':
+                    print(1, end=' ')
+                else:
+                    print(0, end=' ')
+                # print(eachcolumn, end=' ')
+            print()
 
 
-    def bfs(q, p, mm):
+    def bfs(q, p):
         if p == 0:
             return p
         queens_ret = 0
@@ -112,13 +117,9 @@ if __name__ == "__main__":
                     y += 1
                     x += 1
 
-                # if nqueens1 != p:
-                #     print("No solutions")
-                #     continue
-                # else:
                 if nqueens1 == p:
-                    print("Success")
-                    print_matrix(matrix)
+                    print("OK")
+                    print_output(matrix)
                     return nqueens1
 
                 for x in reversed(range(n)):  # append all 0 valued cells into Q
@@ -127,10 +128,10 @@ if __name__ == "__main__":
                     if row < n - 1:
                         if matrix[row + 1][x] == 0:
                             q.insert(0, tuple([row + 1, x, [[y for y in xx] for xx in matrix], nqueens1]))
-                print_matrix(matrix)
-
+                # print_matrix(matrix)
+                # print()
                 # print([[x[:2]] for x in q])
-                print(len(q))
+                # print(len(q))
                 if len(q) == 0:
 
                     if nqueens1 < p:
@@ -139,15 +140,15 @@ if __name__ == "__main__":
                             for y in range(n):
 
                                 if matrix[x][y] == 0:
-                                    print("hello")
+                                    # print("hello")
                                     nqueens1 += 1
                                     matrix[x][y] = 'Q'
                                     if nqueens1 == p:
-                                        print("last")
+                                        # print("last")
                                         return nqueens1
                 queens_ret = nqueens1
         if queens_ret == p:
-            print("last")
+            # print("last")
             return queens_ret
             # for x in matrix
         return -1
@@ -156,7 +157,7 @@ if __name__ == "__main__":
     # print_matrix(matrix1)
     start = time.time()
 
-    numberq = bfs(q1, p, matrix1)
+    numberq = bfs(q1, p)
 
     if numberq == -1:
         print("Failure")
