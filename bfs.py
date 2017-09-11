@@ -12,18 +12,14 @@ if __name__ == "__main__":
     matrix1 = []
     for x in range(n):#generate state matrix
         matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
-    # for eachrow in matrix1:
-    #     for eachcolumn in eachrow:
-    #         print(eachcolumn, end=' ')
-    #     print()
-    # exit(0)
 
     q1 = deque()
 
     # matrix1 = [[0 for x in range(n)] for x in range(n)]
 
     for x in range(n):  # first column possible positions of Q
-        q1.insert(0, tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
+        if matrix1[0][x] == 0:
+            q1.insert(0, tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
 
     nqueens1 = 0
 
@@ -53,7 +49,6 @@ if __name__ == "__main__":
         queens_ret = 0
         while len(q) > 0:
             row, col, matrix, nqueens1 = q.pop()
-            # queens_ret = copy.deepcopy(nqueens1)
             if matrix[row][col] == 0:
                 matrix[row][col] = 'Q'
                 nqueens1 += 1
@@ -128,27 +123,29 @@ if __name__ == "__main__":
                     if row < n - 1:
                         if matrix[row + 1][x] == 0:
                             q.insert(0, tuple([row + 1, x, [[y for y in xx] for xx in matrix], nqueens1]))
-                # print_matrix(matrix)
-                # print()
-                # print([[x[:2]] for x in q])
+
+                print_matrix(matrix)
+                print([[x[:2]] for x in q])
+                print()
                 # print(len(q))
                 if len(q) == 0:
-
                     if nqueens1 < p:
-
                         for x in range(n):
                             for y in range(n):
-
                                 if matrix[x][y] == 0:
-                                    # print("hello")
                                     nqueens1 += 1
                                     matrix[x][y] = 'Q'
                                     if nqueens1 == p:
-                                        # print("last")
+                                        print("OK")
+                                        print_output(matrix)
                                         return nqueens1
                 queens_ret = nqueens1
+            print_matrix(matrix)
+            print([x[:2] for x in q])
+            print()
         if queens_ret == p:
-            # print("last")
+            print("OK")
+            print_output(matrix)
             return queens_ret
             # for x in matrix
         return -1
