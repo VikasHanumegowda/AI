@@ -1,4 +1,5 @@
 from collections import deque
+from copy import deepcopy
 import time
 import copy
 
@@ -19,7 +20,8 @@ if __name__ == "__main__":
 
     for x in range(n):  # first column possible positions of Q
         if matrix1[0][x] == 0:
-            q1.insert(0, tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
+            # q1.insert(0, tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
+            q1.insert(0, tuple([0, x, deepcopy(matrix1), 0]))
 
     nqueens1 = 0
 

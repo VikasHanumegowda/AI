@@ -1,4 +1,5 @@
 from collections import deque
+from copy import deepcopy
 import time
 
 if __name__ == "__main__":
@@ -84,7 +85,7 @@ if __name__ == "__main__":
             y += 1
             x += 1
 
-        return [[x for x in y] for y in matrix]
+        return deepcopy(matrix)
 
 
     def find_possible_children(row, n, matrix, q, nqueens1):
@@ -95,7 +96,7 @@ if __name__ == "__main__":
                     if y < n:
                         if matrix[y][x] == 0:
                             propagation = 1
-                            q.append(tuple([y, x, [[yy for yy in xx] for xx in matrix], nqueens1]))
+                            q.append(tuple([y, x, deepcopy(matrix), nqueens1]))
                 if propagation != 0:
                     break
         return q
@@ -112,15 +113,15 @@ if __name__ == "__main__":
                 matrix[row][col] = 'Q'
                 nqueens1 += 1
 
-                matrix = [[row for row in col] for col in mark_conflicts(row, col, matrix)]
+                matrix = deepcopy(mark_conflicts(row, col, matrix))
                 print()
 
                 if nqueens1 == p:
                     print("OK")
-                    # print_output(matrix)
+                    print_output(matrix)
                     return nqueens1
 
-                q = [i for i in find_possible_children(row, n, matrix, q, nqueens1)]
+                q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
 
                 if row == n - 1:
                     if nqueens1 < p:
@@ -129,15 +130,15 @@ if __name__ == "__main__":
                                 if matrix[x][y] == 0:
                                     nqueens1 += 1
                                     matrix[x][y] = 'Q'
-                                    matrix = [[row for row in col] for col in mark_conflicts(x, y, matrix)]
+                                    matrix = deepcopy(mark_conflicts(x, y, matrix))
                                     # print_matrix(matrix)
                                     # print([x[:2] for x in q])
                                     # print
                                     if nqueens1 == p:
                                         print("OK")
-                                        # print_output(matrix)
+                                        print_output(matrix)
                                         return nqueens1
-                                    q = [i for i in find_possible_children(row, n, matrix, q, nqueens1)]
+                                    q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
 
                 queens_ret = nqueens1
                 # print_matrix(matrix)
@@ -146,7 +147,7 @@ if __name__ == "__main__":
 
             if queens_ret == p:
                 print("OK")
-                # print_output(matrix)
+                print_output(matrix)
                 return queens_ret
                 # for x in matrixreturn -1
             # print_matrix(matrix)
@@ -186,12 +187,12 @@ if __name__ == "__main__":
     # for x in range(4):
     numberq = []
     for x in range(4):
-        matrix1 = [[x for x in y] for y in rotate(matrix1, 90)]
+        matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]
         print_matrix(matrix1)
         print(x+1)
         for x in range(n):  # first column possible positions of Q
             if matrix1[0][x] == 0:
-                q1.append(tuple([0, x, [[y for y in xx] for xx in matrix1], 0]))
+                q1.append(tuple([0, x, deepcopy(matrix1), 0]))
 
         nqueens1 = 0
 
