@@ -1,6 +1,8 @@
 from collections import deque
 from copy import deepcopy
 import time
+import multiprocessing
+
 
 if __name__ == "__main__":
 
@@ -130,8 +132,6 @@ if __name__ == "__main__":
                                         return nqueens1, matrix
                                     q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
                 queens_ret = nqueens1
-            # print_output(matrix)
-            # print()
             if queens_ret == p:
                 return queens_ret, matrix
         return -1, matrix
@@ -147,8 +147,6 @@ if __name__ == "__main__":
                 nqueens1 += 1
                 matrix = deepcopy(mark_conflicts(row, col, matrix))
                 if nqueens1 == p:
-                    print("OK")
-                    print_output(matrix)
                     return nqueens1, deepcopy(matrix)
                 q = find_possible_children(row, n, matrix, q, nqueens1)
                 if len(q) == 0:
@@ -160,18 +158,15 @@ if __name__ == "__main__":
                                     matrix[x][y] = 'Q'
                                     matrix = deepcopy(mark_conflicts(x, y, matrix))
                                     if nqueens1 == p:
-                                        print("OK")
-                                        print_output(matrix)
                                         return nqueens1, matrix
                                     q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
                 queens_ret = nqueens1
-            # print_output(matrix)
-            # print()
         if queens_ret == p:
-            print("OK")
-            print_output(matrix)
             return queens_ret, matrix
-        return -1
+        return -1, matrix
+
+    def sa():
+        pass
 
 
 
@@ -187,15 +182,18 @@ if __name__ == "__main__":
     q1 = deque()
     numberq = []
     found = 0
+    output = open("output.txt", "w")
     for x in range(2):
-        matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]
+        matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]#rotate matrix and process
         for xx in range(n):  # first column possible positions of Q
             if matrix1[0][xx] == 0:
                 q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
         nqueens1 = 0
         if bfs_dfs == "DFS":
             ret_nq, matrix = dfs(q1, p)
-        else:
+        elif bfs_dfs == "BFS":
+            ret_nq, matrix = bfs(q1, p)
+        elif bfs_dfs == "SA":
             ret_nq, matrix = bfs(q1, p)
 
         if x == 0:
@@ -208,6 +206,9 @@ if __name__ == "__main__":
 
         if ret_nq == p:
             print("OK")
+            output.write("OKLF")
+            output.write("OK")
+
             print_output(matrix)
             found = 1
             break
