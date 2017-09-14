@@ -107,64 +107,9 @@ if __name__ == "__main__":
         return q
 
 
-    def dfs(q, p):
-        if p == 0:
-            return p, deepcopy(q.pop()[2])
-        queens_ret = 0
-        while len(q) > 0:
-            row, col, matrix, nqueens1 = q.pop()
-            if matrix[row][col] == 0:
-                matrix[row][col] = 'Q'
-                nqueens1 += 1
-                matrix = deepcopy(mark_conflicts(row, col, matrix))
-                if nqueens1 == p:
-                    return nqueens1, deepcopy(matrix)
-                q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
-                if row == n - 1:
-                    if nqueens1 < p:
-                        for x in range(n):
-                            for y in range(n):
-                                if matrix[x][y] == 0:
-                                    nqueens1 += 1
-                                    matrix[x][y] = 'Q'
-                                    matrix = deepcopy(mark_conflicts(x, y, matrix))
-                                    if nqueens1 == p:
-                                        return nqueens1, matrix
-                                    q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
-                queens_ret = nqueens1
-            if queens_ret == p:
-                return queens_ret, matrix
-        return -1, matrix
+    def sa():
 
-    def bfs(q, p):
-        if p == 0:
-            return p, deepcopy(q.pop()[2])
-        queens_ret = 0
-        while len(q) > 0:
-            row, col, matrix, nqueens1 = q.popleft()
-            if matrix[row][col] == 0:
-                matrix[row][col] = 'Q'
-                nqueens1 += 1
-                matrix = deepcopy(mark_conflicts(row, col, matrix))
-                if nqueens1 == p:
-                    return nqueens1, deepcopy(matrix)
-                q = find_possible_children(row, n, matrix, q, nqueens1)
-                if len(q) == 0:
-                    if nqueens1 < p:
-                        for x in range(n):
-                            for y in range(n):
-                                if matrix[x][y] == 0:
-                                    nqueens1 += 1
-                                    matrix[x][y] = 'Q'
-                                    matrix = deepcopy(mark_conflicts(x, y, matrix))
-                                    if nqueens1 == p:
-                                        return nqueens1, matrix
-                                    q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
-                queens_ret = nqueens1
-        if queens_ret == p:
-            return queens_ret, matrix
-        return -1, matrix
-
+        pass
 
 
     f = open("input.txt", "r")
