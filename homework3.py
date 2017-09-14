@@ -13,16 +13,16 @@ if __name__ == "__main__":
             print()
 
 
-    def print_output(matrix):
+    def print_output(matrix,f):
         for eachrow in matrix:
             for eachcolumn in eachrow:
                 if eachcolumn == 'T':
-                    print(2, end=' ')
+                    output.write('2')
                 elif eachcolumn == 'Q':
-                    print(1, end=' ')
+                    output.write('1')
                 else:
-                    print(0, end=' ')
-            print()
+                    output.write('0')
+            output.write("LF")
 
 
     def rotate(matrix, degree):
@@ -209,7 +209,7 @@ if __name__ == "__main__":
             output.write("OKLF")
             output.write("OK")
 
-            print_output(matrix)
+            print_output(matrix,output)
             found = 1
             break
             print()
@@ -218,6 +218,6 @@ if __name__ == "__main__":
 
     if found == 0:
         if all([xx[0] == -1 for xx in numberq]):
-            print("FAIL")
+            output.write("FAIL")
     end = time.time()
     print("time : " + str(end - start))
