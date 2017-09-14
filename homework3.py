@@ -220,4 +220,6 @@ if __name__ == "__main__":
         if all([xx[0] == -1 for xx in numberq]):
             output.write("FAIL")
     end = time.time()
+    output.close()
+    f.close()
     print("time : " + str(end - start))
