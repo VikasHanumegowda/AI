@@ -107,8 +107,10 @@ if __name__ == "__main__":
         return q
 
 
-    def sa():
-
+    def sa(board,n,p,):
+        board = []
+        for x in range(n):
+            for
         pass
 
 
@@ -126,7 +128,7 @@ if __name__ == "__main__":
     found = 0
     output = open("output.txt", "w")
 
-    
+
 
 
 

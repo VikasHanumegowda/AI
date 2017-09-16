@@ -3,7 +3,6 @@ from copy import deepcopy
 import time
 import multiprocessing
 
-
 if __name__ == "__main__":
 
     def print_matrix(matrix):
@@ -13,7 +12,7 @@ if __name__ == "__main__":
             print()
 
 
-    def print_output(matrix,f):
+    def print_output(matrix):
         for eachrow in matrix:
             for eachcolumn in eachrow:
                 if eachcolumn == 'T':
@@ -22,7 +21,8 @@ if __name__ == "__main__":
                     output.write('1')
                 else:
                     output.write('0')
-            output.write("LF")
+            output.write("\n")
+        output.write("\n")
 
 
     def rotate(matrix, degree):
@@ -136,6 +136,7 @@ if __name__ == "__main__":
                 return queens_ret, matrix
         return -1, matrix
 
+
     def bfs(q, p):
         if p == 0:
             return p, deepcopy(q.pop()[2])
@@ -165,62 +166,65 @@ if __name__ == "__main__":
             return queens_ret, matrix
         return -1, matrix
 
+
     def sa():
 
         pass
 
 
 
-    f = open("input.txt", "r")
-    bfs_dfs = f.readline().strip()  # for the first line retrieval
-    print(bfs_dfs)
-    n = int(f.readline().strip())  # Size of square board
-    p = int(f.readline().strip())  # Number of Queens
-    matrix1 = []
-    for x in range(n):
-        matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
-    start = time.time()
-    q1 = deque()
-    numberq = []
-    found = 0
-    output = open("output.txt", "w")
-    for x in range(2):
-        matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]#rotate matrix and process
-        for xx in range(n):  # first column possible positions of Q
-            if matrix1[0][xx] == 0:
-                q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
-        nqueens1 = 0
-        if bfs_dfs == "DFS":
-            ret_nq, matrix = dfs(q1, p)
-        elif bfs_dfs == "BFS":
-            ret_nq, matrix = bfs(q1, p)
-        elif bfs_dfs == "SA":
-            ret_nq, matrix = bfs(q1, p)
+    for xx in range(4):
+        if xx == 0:
+            f = open("input.txt", "r")
+        else:
+            f = open("input"+str(xx)+".txt", "r")
+        bfs_dfs = f.readline().strip()  # for the first line retrieval
+        # print(bfs_dfs)
+        n = int(f.readline().strip())  # Size of square board
+        p = int(f.readline().strip())  # Number of Queens
+        matrix1 = []
+        for x in range(n):
+            matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
+        start = time.time()
+        q1 = deque()
+        numberq = []
+        found = 0
+        output = open("output"+str(xx)+".txt", "w")
+        for x in range(2):
+            matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]  # rotate matrix and process
+            for xx in range(n):  # first column possible positions of Q
+                if matrix1[0][xx] == 0:
+                    q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
+            nqueens1 = 0
+            if bfs_dfs == "DFS":
+                ret_nq, matrix = dfs(q1, p)
+            elif bfs_dfs == "BFS":
+                ret_nq, matrix = bfs(q1, p)
+            elif bfs_dfs == "SA":
+                ret_nq, matrix = bfs(q1, p)
+            if x == 0:
+                # print(x + 1)
+                matrix = deepcopy(rotate(matrix, 270))
 
-        if x == 0:
-            # print(x + 1)
-            matrix = deepcopy(rotate(matrix, 270))
+            elif x == 1:
+                # print(x + 1)
+                matrix = deepcopy(rotate(matrix, 180))
+            if ret_nq == p:
+                print("OK")
+                output.write("OK\n")
 
-        elif x == 1:
-            # print(x + 1)
-            matrix = deepcopy(rotate(matrix, 180))
+                print_output(matrix, output)
+                found = 1
+                break
+                print()
 
-        if ret_nq == p:
-            print("OK")
-            output.write("OKLF")
-            output.write("OK")
+            numberq.append([ret_nq, matrix])
 
-            print_output(matrix,output)
-            found = 1
-            break
-            print()
-
-        numberq.append([ret_nq, matrix])
-
-    if found == 0:
-        if all([xx[0] == -1 for xx in numberq]):
-            output.write("FAIL")
-    end = time.time()
-    output.close()
-    f.close()
-    print("time : " + str(end - start))
+        if found == 0:
+            if all([xx[0] == -1 for xx in numberq]):
+                print("FAIL")
+                output.write("FAIL\n")
+        end = time.time()
+        output.close()
+        f.close()
+        print("time : " + str(end - start))
