@@ -1,7 +1,7 @@
 from collections import deque
 from copy import deepcopy
 import time
-import multiprocessing
+import random
 
 
 if __name__ == "__main__":
@@ -125,39 +125,10 @@ if __name__ == "__main__":
     numberq = []
     found = 0
     output = open("output.txt", "w")
-    for x in range(2):
-        matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]#rotate matrix and process
-        for xx in range(n):  # first column possible positions of Q
-            if matrix1[0][xx] == 0:
-                q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
-        nqueens1 = 0
-        if bfs_dfs == "DFS":
-            ret_nq, matrix = dfs(q1, p)
-        elif bfs_dfs == "BFS":
-            ret_nq, matrix = bfs(q1, p)
 
-        if x == 0:
-            # print(x + 1)
-            matrix = deepcopy(rotate(matrix, 270))
 
-        elif x == 1:
-            # print(x + 1)
-            matrix = deepcopy(rotate(matrix, 180))
 
-        if ret_nq == p:
-            print("OK")
-            output.write("OKLF")
-            output.write("OK")
 
-            print_output(matrix)
-            found = 1
-            break
-            print()
 
-        numberq.append([ret_nq, matrix])
-
-    if found == 0:
-        if all([xx[0] == -1 for xx in numberq]):
-            print("FAIL")
     end = time.time()
     print("time : " + str(end - start))
