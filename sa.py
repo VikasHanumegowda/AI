@@ -111,9 +111,7 @@ if __name__ == "__main__":
         board = []
         for x in range(n):
             # for
-
-        pass
-
+            pass
 
     f = open("input.txt", "r")
     bfs_dfs = f.readline().strip()  # for the first line retrieval
