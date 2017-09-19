@@ -2,6 +2,7 @@ from collections import deque
 from copy import deepcopy
 import time
 import random
+import math
 
 if __name__ == "__main__":
 
@@ -106,12 +107,22 @@ if __name__ == "__main__":
         return q
 
 
-    def sa(board, n, p, *args):
-        # T = time.
+    def sa(n, p):
+        start = time.time()
         board = []
+        temp = []
         for x in range(n):
-            # for
-            pass
+            temp.append(0)
+        for x in range(n):
+            board.append(temp)
+        prev_energy = 0
+        while (time.time() - start) < 280:
+            for x in range(p):
+                row = math.floor(random.random() * 8)
+                col = math.floor(random.random() * 8)
+                board[row][col] = 'Q'
+            cur_energy = calculate_energy(board)
+
 
     f = open("input.txt", "r")
     bfs_dfs = f.readline().strip()  # for the first line retrieval
