@@ -3,7 +3,6 @@ from copy import deepcopy
 import time
 import random
 
-
 if __name__ == "__main__":
 
     def print_matrix(matrix):
@@ -107,10 +106,12 @@ if __name__ == "__main__":
         return q
 
 
-    def sa(board,n,p,):
+    def sa(board, n, p, *args):
+        # T = time.
         board = []
         for x in range(n):
-            for
+            # for
+
         pass
 
 
@@ -127,10 +128,6 @@ if __name__ == "__main__":
     numberq = []
     found = 0
     output = open("output.txt", "w")
-
-
-
-
 
     end = time.time()
     print("time : " + str(end - start))

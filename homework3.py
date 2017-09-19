@@ -1,7 +1,6 @@
 from collections import deque
 from copy import deepcopy
 import time
-import multiprocessing
 
 if __name__ == "__main__":
 
@@ -12,17 +11,17 @@ if __name__ == "__main__":
             print()
 
 
-    def print_output(matrix):
+    def print_output(matrix, f):
         for eachrow in matrix:
             for eachcolumn in eachrow:
                 if eachcolumn == 'T':
-                    output.write('2')
+                    f.write('2')
                 elif eachcolumn == 'Q':
-                    output.write('1')
+                    f.write('1')
                 else:
-                    output.write('0')
-            output.write("\n")
-        output.write("\n")
+                    f.write('0')
+            f.write("\n")
+            # output.write("\n")
 
 
     def rotate(matrix, degree):
@@ -104,10 +103,12 @@ if __name__ == "__main__":
                             q.append(tuple([y, x, deepcopy(matrix), nqueens1]))
                 if propagation != 0:
                     break
+        # print(len(q))
         return q
 
 
     def dfs(q, p):
+        matrix = []
         if p == 0:
             return p, deepcopy(q.pop()[2])
         queens_ret = 0
@@ -138,6 +139,7 @@ if __name__ == "__main__":
 
 
     def bfs(q, p):
+        matrix = []
         if p == 0:
             return p, deepcopy(q.pop()[2])
         queens_ret = 0
@@ -167,64 +169,90 @@ if __name__ == "__main__":
         return -1, matrix
 
 
-    def sa():
+    # def getNextState(q):
+    #     if len(q[0]) == 4:
+    #         if len(q) > 0:
+    #             return q.popleft()
 
-        pass
+
+    def sa(q, p):
+        if p == 0:
+            return p, deepcopy(q.pop()[2])
+        queens_ret = 0
+        while len(q) > 0:
+            row, col, matrix, nqueens1 = q.popleft()
+            if matrix[row][col] == 0:
+                matrix[row][col] = 'Q'
+                nqueens1 += 1
+                matrix = deepcopy(mark_conflicts(row, col, matrix))
+                if nqueens1 == p:
+                    return nqueens1, deepcopy(matrix)
+                q = find_possible_children(row, n, matrix, q, nqueens1)
+                if len(q) == 0:
+                    if nqueens1 < p:
+                        for x in range(n):
+                            for y in range(n):
+                                if matrix[x][y] == 0:
+                                    nqueens1 += 1
+                                    matrix[x][y] = 'Q'
+                                    matrix = deepcopy(mark_conflicts(x, y, matrix))
+                                    if nqueens1 == p:
+                                        return nqueens1, matrix
+                                    q = deepcopy(find_possible_children(row, n, matrix, q, nqueens1))
+                queens_ret = nqueens1
+        if queens_ret == p:
+            return queens_ret, matrix
+        return -1, matrix
 
 
+    # for xx in range(4):
+    f = open("input.txt", "r")
+    bfs_dfs = f.readline().strip()  # for the first line retrieval
+    # print(bfs_dfs)
+    n = int(f.readline().strip())  # Size of square board
+    p = int(f.readline().strip())  # Number of Queens
+    matrix1 = []
+    for x in range(n):
+        matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
+    start = time.time()
+    q1 = deque()
+    numberq = []
+    found = 0
+    output = open("output.txt", "w")
+    for x in range(2):
+        matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]  # rotate matrix and process
+        for xx in range(n):  # first column possible positions of Q
+            if matrix1[0][xx] == 0:
+                q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
+        nqueens1 = 0
+        if bfs_dfs == "DFS":
+            ret_nq, matrix = dfs(q1, p)
+        elif bfs_dfs == "BFS":
+            ret_nq, matrix = bfs(q1, p)
+        elif bfs_dfs == "SA":
+            ret_nq, matrix = sa(q1, p)
+        if x == 0:
+            # print(x + 1)
+            matrix = deepcopy(rotate(matrix, 270))
 
-    for xx in range(4):
-        if xx == 0:
-            f = open("input.txt", "r")
-        else:
-            f = open("input"+str(xx)+".txt", "r")
-        bfs_dfs = f.readline().strip()  # for the first line retrieval
-        # print(bfs_dfs)
-        n = int(f.readline().strip())  # Size of square board
-        p = int(f.readline().strip())  # Number of Queens
-        matrix1 = []
-        for x in range(n):
-            matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
-        start = time.time()
-        q1 = deque()
-        numberq = []
-        found = 0
-        output = open("output"+str(xx)+".txt", "w")
-        for x in range(2):
-            matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]  # rotate matrix and process
-            for xx in range(n):  # first column possible positions of Q
-                if matrix1[0][xx] == 0:
-                    q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
-            nqueens1 = 0
-            if bfs_dfs == "DFS":
-                ret_nq, matrix = dfs(q1, p)
-            elif bfs_dfs == "BFS":
-                ret_nq, matrix = bfs(q1, p)
-            elif bfs_dfs == "SA":
-                ret_nq, matrix = bfs(q1, p)
-            if x == 0:
-                # print(x + 1)
-                matrix = deepcopy(rotate(matrix, 270))
+        elif x == 1:
+            # print(x + 1)
+            matrix = deepcopy(rotate(matrix, 180))
+        if ret_nq == p:
+            # print("OK")
+            output.write("OK\n")
 
-            elif x == 1:
-                # print(x + 1)
-                matrix = deepcopy(rotate(matrix, 180))
-            if ret_nq == p:
-                print("OK")
-                output.write("OK\n")
+            print_output(matrix, output)
+            found = 1
+            break
 
-                print_output(matrix, output)
-                found = 1
-                break
-                print()
+        numberq.append([ret_nq, matrix])
 
-            numberq.append([ret_nq, matrix])
-
-        if found == 0:
-            if all([xx[0] == -1 for xx in numberq]):
-                print("FAIL")
-                output.write("FAIL\n")
-        end = time.time()
-        output.close()
-        f.close()
-        print("time : " + str(end - start))
+    if found == 0:
+        if all([xx[0] == -1 for xx in numberq]):
+            # print("FAIL")
+            output.write("FAIL\n")
+    end = time.time()
+    output.close()
+    f.close()
+    print("time : " + str(end - start))
