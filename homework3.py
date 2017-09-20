@@ -243,6 +243,7 @@ if __name__ == "__main__":
             output.write("OK\n")
 
             print_output(matrix, output)
+            print_matrix(matrix)
             found = 1
             break
 

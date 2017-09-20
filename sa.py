@@ -107,24 +107,38 @@ if __name__ == "__main__":
         return q
 
 
+    def calculate_energy(board):
+        sum1 = 0
+        for x in board:
+            for y in x:
+                if type(y) == int:
+                    sum1 += y
+        return sum1
+
+
     def sa(n, p, board):
         start = time.time()
-        board = []
-        temp = []
-        for x in range(n):
-            temp.append(0)
-        for x in range(n):
-            board.append(temp)
-        prev_energy = 0
+        emptyboard = deepcopy(board)
+        prev_energy = -9999
+        print_matrix(board)
         while (time.time() - start) < 280:
             count_of_q = 0
-            while count_of_q <
+            board = deepcopy(emptyboard)
+            while count_of_q < p:
                 row = math.floor(random.random() * n)
                 col = math.floor(random.random() * n)
-                board[row][col] = 'Q'
-                mark_conflicts()
-            cur_energy = calculate_energy(board)
-
+                if board[row][col] != 'T' and board[row][col] != 'Q':
+                    board[row][col] = 'Q'
+                    board = mark_conflicts(row, col, board)
+                    # print_matrix(board)
+                    count_of_q += 1
+                    # print()
+                    # cur_energy = calculate_energy(board)
+            new_energy = calculate_energy(board)
+            print(new_energy)
+            print_matrix(board)
+            print()
+            # if
 
     f = open("input.txt", "r")
     bfs_dfs = f.readline().strip()  # for the first line retrieval
@@ -136,9 +150,8 @@ if __name__ == "__main__":
         matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
     start = time.time()
     q1 = deque()
-    numberq = []
     found = 0
     output = open("output.txt", "w")
-
+    sa(n, p, matrix1)
     end = time.time()
     print("time : " + str(end - start))
