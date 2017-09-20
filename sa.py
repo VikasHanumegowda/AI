@@ -107,7 +107,7 @@ if __name__ == "__main__":
         return q
 
 
-    def sa(n, p):
+    def sa(n, p, board):
         start = time.time()
         board = []
         temp = []
@@ -117,10 +117,12 @@ if __name__ == "__main__":
             board.append(temp)
         prev_energy = 0
         while (time.time() - start) < 280:
-            for x in range(p):
-                row = math.floor(random.random() * 8)
-                col = math.floor(random.random() * 8)
+            count_of_q = 0
+            while count_of_q <
+                row = math.floor(random.random() * n)
+                col = math.floor(random.random() * n)
                 board[row][col] = 'Q'
+                mark_conflicts()
             cur_energy = calculate_energy(board)
 
 
