@@ -277,58 +277,59 @@ if __name__ == "__main__":
                 else:
                     list_of_pos.append(old_tup)
                     list_of_pos.remove(new_tup)
-            print_matrix(board)
+            # print_matrix(board)
             if prev_energy == 0:
                 break
-            print(list_of_pos)
-            print(len(list_of_pos))
-            print()
+            # print(list_of_pos)
+            # print(len(list_of_pos))
+            # print()
         if prev_energy == 0:
             return p, board
         return -1, board
 
-    f = open("input.txt", "r")
-    bfs_dfs = f.readline().strip()  # for the first line retrieval
-    # print(bfs_dfs)
-    n = int(f.readline().strip())  # Size of square board
-    p = int(f.readline().strip())  # Number of Queens
-    matrix1 = []
-    for x in range(n):
-        matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
-    start = time.time()
+    for xfiles in range(1,11):
+        f = open("input"+str(xfiles)+".txt", "r")
+        bfs_dfs = f.readline().strip()  # for the first line retrieval
+        # print(bfs_dfs)
+        n = int(f.readline().strip())  # Size of square board
+        p = int(f.readline().strip())  # Number of Queens
+        matrix1 = []
+        for x in range(n):
+            matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
+        start = time.time()
 
 
 
-    q1 = deque()
-    numberq = []
-    found = 0
-    output = open("output.txt", "w")
-    for x in range(2):
-        matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]  # rotate matrix and process
-        for xx in range(n):  # first column possible positions of Q
-            if matrix1[0][xx] == 0:
-                q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
-        nqueens1 = 0
-        if bfs_dfs == "DFS":
-            ret_nq, matrix = dfs(q1, p)
-        elif bfs_dfs == "BFS":
-            ret_nq, matrix = bfs(q1, p)
-        elif bfs_dfs == "SA":
-            ret_nq, matrix = sa(n, p, matrix1)
-        if x == 0:
-            matrix = deepcopy(rotate(matrix, 270))
-        elif x == 1:
-            matrix = deepcopy(rotate(matrix, 180))
-        if ret_nq == p:
-            output.write("OK\n")
-            print_output(matrix, output)
-            found = 1
-            break
-        numberq.append([ret_nq, matrix])
-    if found == 0:
-        if all([xx[0] == -1 for xx in numberq]):
-            output.write("FAIL\n")
-    end = time.time()
-    output.close()
-    f.close()
-    # print(end-start)
+        q1 = deque()
+        numberq = []
+        found = 0
+        output = open("output"+str(xfiles)+".txt", "w")
+        for x in range(2):
+            matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]  # rotate matrix and process
+            for xx in range(n):  # first column possible positions of Q
+                if matrix1[0][xx] == 0:
+                    q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
+            nqueens1 = 0
+            if bfs_dfs == "DFS":
+                ret_nq, matrix = dfs(q1, p)
+            elif bfs_dfs == "BFS":
+                ret_nq, matrix = bfs(q1, p)
+            elif bfs_dfs == "SA":
+                ret_nq, matrix = sa(n, p, matrix1)
+            if x == 0:
+                matrix = deepcopy(rotate(matrix, 270))
+            elif x == 1:
+                matrix = deepcopy(rotate(matrix, 180))
+            if ret_nq == p:
+                output.write("OK\n")
+                print_output(matrix, output)
+                found = 1
+                break
+            numberq.append([ret_nq, matrix])
+        if found == 0:
+            if all([xx[0] == -1 for xx in numberq]):
+                output.write("FAIL\n")
+        end = time.time()
+        output.close()
+        f.close()
+        print(end-start)

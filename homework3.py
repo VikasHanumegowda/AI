@@ -112,7 +112,11 @@ if __name__ == "__main__":
         if p == 0:
             return p, deepcopy(q.pop()[2])
         queens_ret = 0
+        timeout = 0
         while len(q) > 0:
+            if (time.time() - start) >= 280 :
+                timeout = 1
+                break
             row, col, matrix, nqueens1 = q.pop()
             if matrix[row][col] == 0:
                 matrix[row][col] = 'Q'
@@ -135,15 +139,21 @@ if __name__ == "__main__":
                 queens_ret = nqueens1
             if queens_ret == p:
                 return queens_ret, matrix
+        if timeout ==1:
+            return -1, matrix
         return -1, matrix
 
 
     def bfs(q, p):
         matrix = []
+        timeout = 0
         if p == 0:
             return p, deepcopy(q.pop()[2])
         queens_ret = 0
         while len(q) > 0:
+            if (time.time() - start) >= 280 :
+                timeout = 1
+                break
             row, col, matrix, nqueens1 = q.popleft()
             if matrix[row][col] == 0:
                 matrix[row][col] = 'Q'
@@ -166,6 +176,8 @@ if __name__ == "__main__":
                 queens_ret = nqueens1
         if queens_ret == p:
             return queens_ret, matrix
+        if timeout == 1:
+            return -1, matrix
         return -1, matrix
 
 
@@ -248,7 +260,11 @@ if __name__ == "__main__":
             tot_energy += calc_energy(x[0], x[1], board)
         prev_energy = tot_energy
         nn = 1.05
-        while (time.time() - start) < 280 :
+        timeout =0
+        while True:
+            if (time.time() - start) >= 280 :
+                timeout = 1
+                break
             T = 1 / math.log(nn)
             nn += 1
             board = deepcopy(emptyboard)
@@ -277,15 +293,17 @@ if __name__ == "__main__":
                 else:
                     list_of_pos.append(old_tup)
                     list_of_pos.remove(new_tup)
-            print_matrix(board)
+            # print_matrix(board)
             if prev_energy == 0:
                 break
-            print(list_of_pos)
-            print(len(list_of_pos))
-            print()
+                # print(list_of_pos)
+                # print(len(list_of_pos))
+                # print()
         if prev_energy == 0:
             return p, board
-        return -1, board
+        if timeout == 1:
+            return -1, board
+
 
     f = open("input.txt", "r")
     bfs_dfs = f.readline().strip()  # for the first line retrieval
@@ -296,8 +314,6 @@ if __name__ == "__main__":
     for x in range(n):
         matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
     start = time.time()
-
-
 
     q1 = deque()
     numberq = []
@@ -325,6 +341,8 @@ if __name__ == "__main__":
             found = 1
             break
         numberq.append([ret_nq, matrix])
+        if bfs_dfs == "SA":
+            break
     if found == 0:
         if all([xx[0] == -1 for xx in numberq]):
             output.write("FAIL\n")
