@@ -126,6 +126,12 @@ if __name__ == "__main__":
     for i in range(n):
         line = [[int(x), 0, 1] for x in f.readline().strip()]
         matrix.append(line)
+    empty = deepcopy(matrix)
+
+    z, matrix = calculate_connectivity(matrix, 2, 0, n)
+    print_matrix(matrix)
+    print(z)
+    z, matrix = calculate_connectivity(empty, 1, 0, n)
 
     print_matrix(matrix)
-    print(calculate_connectivity(matrix, 1, 0, n)[0])
+    print(z)
