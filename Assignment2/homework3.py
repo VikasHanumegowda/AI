@@ -119,19 +119,17 @@ if __name__ == "__main__":
     n = int(f.readline().strip())
     p = int(f.readline().strip())
     t = float(f.readline().strip())
-    list_fruit = [0] * p
-    for x in range(p):
-        list_fruit[x] = 0
+    dict_fruit = {x: 0 for x in range(p)}
+    # print(dict_fruit)
     matrix = []
     for i in range(n):
         line = [[int(x), 0, 1] for x in f.readline().strip()]
         matrix.append(line)
     empty = deepcopy(matrix)
 
-    z, matrix = calculate_connectivity(matrix, 2, 0, n)
-    print_matrix(matrix)
-    print(z)
-    z, matrix = calculate_connectivity(empty, 1, 0, n)
-
-    print_matrix(matrix)
-    print(z)
+    for x in range(n):
+        for y in range(n):
+            z, matrix1 = calculate_connectivity(empty, x, y, n)
+            dict_fruit[empty[x][y][0]] = max(dict_fruit[empty[x][y][0]], z)
+    print(dict_fruit)
+    # print(z)
