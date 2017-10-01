@@ -130,101 +130,99 @@ def remove_fruits(matrix, x, y, n):
         if y == 0:
             # top-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y + 1, n)
+                matrix = remove_fruits(matrix, x, y + 1, n)
                 found = 1
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix1, x + 1, y, n)
+                matrix = remove_fruits(matrix, x + 1, y, n)
                 found = 1
         elif y == n - 1:
             # top-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y - 1, n)
+                matrix = remove_fruits(matrix, x, y - 1, n)
                 found = 1
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x + 1, y, n)
+                matrix = remove_fruits(matrix, x + 1, y, n)
                 found = 1
         else:
             # top-row
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y + 1, n)
+                matrix = remove_fruits(matrix, x, y + 1, n)
                 found = 1
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y - 1, n)
+                matrix = remove_fruits(matrix, x, y - 1, n)
                 found = 1
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x + 1, y, n)
+                matrix = remove_fruits(matrix, x + 1, y, n)
                 found = 1
     elif x == n - 1:
         if y == 0:
             # bottom-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y + 1, n)
-                # matrix1[x][0] = '*'
+                matrix = remove_fruits(matrix, x, y + 1, n)
                 found = 1
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x - 1, y, n)
+                matrix = remove_fruits(matrix, x - 1, y, n)
                 found = 1
         elif y == n - 1:
             # bottom-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y - 1, n)
+                matrix = remove_fruits(matrix, x, y - 1, n)
                 found = 1
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x - 1, y, n)
+                matrix = remove_fruits(matrix, x - 1, y, n)
                 found = 1
         else:
             # bottom-row
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y + 1, n)
+                matrix = remove_fruits(matrix, x, y + 1, n)
                 found = 1
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y - 1, n)
+                matrix = remove_fruits(matrix, x, y - 1, n)
                 found = 1
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x - 1, y, n)
+                matrix = remove_fruits(matrix, x - 1, y, n)
                 found = 1
     else:
         if y == 0:
             # middle-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y + 1, n)
+                matrix = remove_fruits(matrix, x, y + 1, n)
                 found = 1
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x - 1, y, n)
+                matrix = remove_fruits(matrix, x - 1, y, n)
                 found = 1
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x + 1, y, n)
+                matrix = remove_fruits(matrix, x + 1, y, n)
                 found = 1
         elif y == n - 1:
             # middle-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y - 1, n)
+                matrix = remove_fruits(matrix, x, y - 1, n)
                 found = 1
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x - 1, y, n)
+                matrix = remove_fruits(matrix, x - 1, y, n)
                 found = 1
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x + 1, y, n)
+                matrix = remove_fruits(matrix, x + 1, y, n)
                 found = 1
         else:
             # middle-middle :-p
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y - 1, n)
+                matrix = remove_fruits(matrix, x, y - 1, n)
                 found = 1
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix1 = remove_fruits(matrix, x, y + 1, n)
+                matrix = remove_fruits(matrix, x, y + 1, n)
                 found = 1
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x - 1, y, n)
+                matrix = remove_fruits(matrix, x - 1, y, n)
                 found = 1
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix1 = remove_fruits(matrix, x + 1, y, n)
+                matrix = remove_fruits(matrix, x + 1, y, n)
                 found = 1
 
     if found == 1:
-        # print_matrix(matrix1)
-        matrix1[x][y][0] = '*'
-        return deepcopy(matrix1)
+        matrix[x][y][0] = '*'
+        return deepcopy(matrix)
     else:
         matrix[x][y][0] = '*'
         return deepcopy(matrix)
