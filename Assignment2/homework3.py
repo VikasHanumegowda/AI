@@ -1,4 +1,4 @@
-from collections import OrderedDict
+from collections import OrderedDict, Counter
 import math
 from copy import deepcopy
 
@@ -248,15 +248,46 @@ def rotate(matrix, degree):
         return rotate(list(zip(*matrix)[::-1]), degree + 90)
 
 
-# def apply_gravity(matrix):
-#     n = len(matrix)
-#     matrix = rotate(matrix, 90)
-#     for row in matrix:
-#         star_found = 0
-#         for x in row:
-#             if star_found == 0 and type():
+def index_of_star(row):
+    pass
 
 
+def apply_gravity(grav_matrix):
+    n = len(grav_matrix)
+    c = Counter()
+    # print_matrix(grav_matrix)
+    # print()
+    grav_matrix = rotate(grav_matrix, 270)
+    matrix1 = []
+    # print(type(grav_matrix[0]))
+    for x in range(n):
+        temp = []
+        for y in range(n):
+            temp.append(grav_matrix[x][y])
+        matrix1.append(temp)
+    # print_matrix(matrix1)
+    for row in matrix1:
+        c = Counter([e[0] for e in row])
+        if c['*'] == 0:
+            continue
+        else:
+            print(row)
+            row.reverse()
+            # i = 0
+            count = 0
+            while count < c['*']:
+                for x in range(n):
+                    if row[x][0] == '*':
+                        break
+                aa = row.pop(x)
+                row.append(aa)
+                count += 1
+                # i+=1
+            row.reverse()
+            print(row)
+            print()
+    matrix1 = rotate(matrix1, 90)
+    return deepcopy(matrix1)
 
 
 def my_game(n, matrix, dict_fruit, depth):
@@ -273,24 +304,27 @@ def my_game(n, matrix, dict_fruit, depth):
                 dict_fruit[matrix[x][y][0]][1] = x1
                 dict_fruit[matrix[x][y][0]][2] = y1
     # max_value = max([x[0] for x in dict_fruit.values()])
-    print(dict_fruit)
+    # print(dict_fruit)
     # print_matrix(matrix1)
     # choose fruit
     dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
 
     fruit_to_remove = dict_fruit.popitem(False)
     max_value = fruit_to_remove
-    print(fruit_to_remove)
 
     # dictfruit = {0 : [max_value, x-coord, y-coord]}
+    print("Initial")
     print_matrix(matrix)
-    print()
+    print("removed fruits")
     # remove those fruits - replace with *
     matrix = remove_fruits(matrix, fruit_to_remove[1][1], fruit_to_remove[1][2], n)
 
     print_matrix(matrix)
+    print("after gravity")
     # apply gravity
-    # matrix = apply_gravity(matrix)
+    matrix = apply_gravity(matrix)
+    print_matrix(matrix)
+    print("hello")
 
     # create 2 branches
 
