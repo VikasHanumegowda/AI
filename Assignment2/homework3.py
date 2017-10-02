@@ -13,13 +13,11 @@ def print_matrix(matrix):
         print()
 
 
-def print_output(matrix):
-    f = open("output.txt", "w")
+def print_output(matrix, f):
     for eachrow in matrix:
         for eachcolumn in eachrow:
             f.write(str(eachcolumn[0]))
         f.write("\n")
-    f.close()
 
 
 def calculate_connectivity(matrix, x, y, n):
@@ -294,37 +292,39 @@ def apply_gravity(grav_matrix):
 
 def my_game(n, matrix, dict_fruit, depth):
     # matrix = [cellvalue, visited, sumvalue]
-    # dictfruit = {0 : [max_value, x-coord, y-coord]}
-
+    # dictfruit = {0 : [max_value, x-coord, y-coord,matrix]}
+    state_stack = OrderedDict()
     if depth == 5:
         return 0  # ?  ?
     for x in range(n):
         for y in range(n):
-            x1, y1, z, matrix1 = calculate_connectivity(matrix, x, y, n)
-            if z > dict_fruit[matrix[x][y][0]][0]:
-                dict_fruit[matrix[x][y][0]][0] = z
-                dict_fruit[matrix[x][y][0]][1] = x1
-                dict_fruit[matrix[x][y][0]][2] = y1
+            if matrix[x][y][0] != '*':
+                x1, y1, z, matrix1 = calculate_connectivity(matrix, x, y, n)
+                if z > dict_fruit[matrix[x][y][0]][0]:
+                    dict_fruit[matrix[x][y][0]][0] = z
+                    dict_fruit[matrix[x][y][0]][1] = x1
+                    dict_fruit[matrix[x][y][0]][2] = y1
     dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
 
     fruit_to_remove = []
     fruit_to_remove.append(dict_fruit.popitem(False))
     fruit_to_remove.append(dict_fruit.popitem(False))
-
-    for i in range(2):
-        matrix = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
-
-    # remove those fruits - replace with *
-
-    # apply gravity
+    print(fruit_to_remove)
+    # for i in range(2):
+    matrix = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
     matrix = apply_gravity(matrix)
-    print_output(matrix)
-    # create 2 branches
 
-    # choose the best of the result
+    state_stack[depth] = [dict_fruit, matrix]
+    xcoor = fruit_to_remove[0][1][1]
+    ycoor = fruit_to_remove[0][1][2]
 
-    # return best value
-    return fruit_to_remove[1][0]
+    output = open("output.txt", "w")
+    output.write(chr(ord('A') + ycoor))
+    output.write(str(1 + xcoor))
+    output.write("\n")
+    print_output(matrix,output)
+    output.close()
+    return fruit_to_remove[0][1][0]
 
 
 if __name__ == "__main__":
@@ -340,7 +340,12 @@ if __name__ == "__main__":
     dict_fruit = OrderedDict(dict_fruit)
     matrix = []
     for i in range(n):
-        line = [[int(x), 0, 1] for x in f.readline().strip()]
+        line = []
+        for x in f.readline().strip():
+            if x.isdigit():
+                line.append([int(x), 0, 1])
+            else:
+                line.append([x, 0, 1])
         matrix.append(line)
     empty = deepcopy(matrix)
     start = time()
