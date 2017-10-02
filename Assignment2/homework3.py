@@ -1,5 +1,6 @@
 from collections import OrderedDict, Counter
 from copy import deepcopy
+from time import time
 
 
 def print_matrix(matrix):
@@ -10,6 +11,15 @@ def print_matrix(matrix):
                 print(eachelement, end=' ')
             print("] ,", end='')
         print()
+
+
+def print_output(matrix):
+    f = open("output.txt", "w")
+    for eachrow in matrix:
+        for eachcolumn in eachrow:
+            f.write(str(eachcolumn[0]))
+        f.write("\n")
+    f.close()
 
 
 def calculate_connectivity(matrix, x, y, n):
@@ -297,21 +307,24 @@ def my_game(n, matrix, dict_fruit, depth):
                 dict_fruit[matrix[x][y][0]][2] = y1
     dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
 
-    fruit_to_remove = dict_fruit.popitem(False)
-    max_value = fruit_to_remove
+    fruit_to_remove = []
+    fruit_to_remove.append(dict_fruit.popitem(False))
+    fruit_to_remove.append(dict_fruit.popitem(False))
+
+    for i in range(2):
+        matrix = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
 
     # remove those fruits - replace with *
-    matrix = remove_fruits(matrix, fruit_to_remove[1][1], fruit_to_remove[1][2], n)
 
     # apply gravity
     matrix = apply_gravity(matrix)
-
+    print_output(matrix)
     # create 2 branches
 
     # choose the best of the result
 
     # return best value
-    return max_value
+    return fruit_to_remove[1][0]
 
 
 if __name__ == "__main__":
@@ -330,5 +343,7 @@ if __name__ == "__main__":
         line = [[int(x), 0, 1] for x in f.readline().strip()]
         matrix.append(line)
     empty = deepcopy(matrix)
-
+    start = time()
     print(my_game(n, empty, dict_fruit, 0))
+    stop = time()
+    print(stop - start)
