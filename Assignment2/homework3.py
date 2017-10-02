@@ -1,5 +1,4 @@
 from collections import OrderedDict, Counter
-import math
 from copy import deepcopy
 
 
@@ -254,12 +253,8 @@ def index_of_star(row):
 
 def apply_gravity(grav_matrix):
     n = len(grav_matrix)
-    c = Counter()
-    # print_matrix(grav_matrix)
-    # print()
     grav_matrix = rotate(grav_matrix, 270)
     matrix1 = []
-    # print(type(grav_matrix[0]))
     for x in range(n):
         temp = []
         for y in range(n):
@@ -271,7 +266,6 @@ def apply_gravity(grav_matrix):
         if c['*'] == 0:
             continue
         else:
-            print(row)
             row.reverse()
             # i = 0
             count = 0
@@ -284,8 +278,6 @@ def apply_gravity(grav_matrix):
                 count += 1
                 # i+=1
             row.reverse()
-            print(row)
-            print()
     matrix1 = rotate(matrix1, 90)
     return deepcopy(matrix1)
 
@@ -303,28 +295,16 @@ def my_game(n, matrix, dict_fruit, depth):
                 dict_fruit[matrix[x][y][0]][0] = z
                 dict_fruit[matrix[x][y][0]][1] = x1
                 dict_fruit[matrix[x][y][0]][2] = y1
-    # max_value = max([x[0] for x in dict_fruit.values()])
-    # print(dict_fruit)
-    # print_matrix(matrix1)
-    # choose fruit
     dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
 
     fruit_to_remove = dict_fruit.popitem(False)
     max_value = fruit_to_remove
 
-    # dictfruit = {0 : [max_value, x-coord, y-coord]}
-    print("Initial")
-    print_matrix(matrix)
-    print("removed fruits")
     # remove those fruits - replace with *
     matrix = remove_fruits(matrix, fruit_to_remove[1][1], fruit_to_remove[1][2], n)
 
-    print_matrix(matrix)
-    print("after gravity")
     # apply gravity
     matrix = apply_gravity(matrix)
-    print_matrix(matrix)
-    print("hello")
 
     # create 2 branches
 
@@ -336,11 +316,12 @@ def my_game(n, matrix, dict_fruit, depth):
 
 if __name__ == "__main__":
     # matrix = [cellvalue, visited, sumvalue]
+    # dictfruit = {0 : [max_value, x-coord, y-coord]}
+
     f = open("input.txt", "r")
     n = int(f.readline().strip())
     p = int(f.readline().strip())
     t = float(f.readline().strip())
-    # dictfruit = {0 : [max_value, x-coord, y-coord]}
 
     dict_fruit = {x: [0, -1, -1] for x in range(p)}
     dict_fruit = OrderedDict(dict_fruit)
@@ -350,5 +331,4 @@ if __name__ == "__main__":
         matrix.append(line)
     empty = deepcopy(matrix)
 
-    # calculate the max number of fruits that can be picked
     print(my_game(n, empty, dict_fruit, 0))
