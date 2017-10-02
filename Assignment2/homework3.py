@@ -308,7 +308,7 @@ def my_game(n, matrix, dict_fruit, depth):
 
     fruit_to_remove = []
     fruit_to_remove.append(dict_fruit.popitem(False))
-    fruit_to_remove.append(dict_fruit.popitem(False))
+    #fruit_to_remove.append(dict_fruit.popitem(False))
     print(fruit_to_remove)
     # for i in range(2):
     matrix = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
