@@ -275,16 +275,15 @@ def apply_gravity(grav_matrix):
             continue
         else:
             row.reverse()
-            # i = 0
             count = 0
             while count < c['*']:
+                x = 0
                 for x in range(n):
                     if row[x][0] == '*':
                         break
                 aa = row.pop(x)
                 row.append(aa)
                 count += 1
-                # i+=1
             row.reverse()
     matrix1 = rotate(matrix1, 90)
     return deepcopy(matrix1)
@@ -308,9 +307,9 @@ def my_game(n, matrix, dict_fruit, depth):
 
     fruit_to_remove = []
     fruit_to_remove.append(dict_fruit.popitem(False))
-    #fruit_to_remove.append(dict_fruit.popitem(False))
+    # fruit_to_remove.append(dict_fruit.popitem(False))
     print(fruit_to_remove)
-    # for i in range(2):
+
     matrix = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
     matrix = apply_gravity(matrix)
 
@@ -322,7 +321,7 @@ def my_game(n, matrix, dict_fruit, depth):
     output.write(chr(ord('A') + ycoor))
     output.write(str(1 + xcoor))
     output.write("\n")
-    print_output(matrix,output)
+    print_output(matrix, output)
     output.close()
     return fruit_to_remove[0][1][0]
 
