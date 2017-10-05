@@ -1,6 +1,7 @@
 from collections import OrderedDict, Counter
 from copy import deepcopy
 from time import time
+from sys import maxsize
 
 
 def print_matrix(matrix):
@@ -289,12 +290,33 @@ def apply_gravity(grav_matrix):
     return deepcopy(matrix1)
 
 
-def my_game(n, matrix, dict_fruit, depth):
+def dict_fruit_has_fruit(dict_fruit_1):
+    for x in dict_fruit_1:
+        if dict_fruit_1[x][1] != -1:
+            return True
+    return False
+
+
+def my_game(n, matrix, depth, alpha, beta):
     # matrix = [cellvalue, visited, sumvalue]
     # dictfruit = {0 : [max_value, x-coord, y-coord,matrix]}
+
+
     state_stack = OrderedDict()
-    if depth == 5:
-        return 0  # ?  ?
+    max_turn = 0
+    x = -1,
+    y = -1
+    if depth >= 4:  # Because level 3 will be Max player
+        return -9999, [], x, y
+
+    if depth % 2 == 1:
+        pass
+    else:
+        max_turn = 1
+
+    dict_fruit = {x: [0, -1, -1] for x in range(p)}
+    dict_fruit = OrderedDict(dict_fruit)
+
     for x in range(n):
         for y in range(n):
             if matrix[x][y][0] != '*':
@@ -303,27 +325,60 @@ def my_game(n, matrix, dict_fruit, depth):
                     dict_fruit[matrix[x][y][0]][0] = z
                     dict_fruit[matrix[x][y][0]][1] = x1
                     dict_fruit[matrix[x][y][0]][2] = y1
+
     dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
 
-    fruit_to_remove = []
-    fruit_to_remove.append(dict_fruit.popitem(False))
-    # fruit_to_remove.append(dict_fruit.popitem(False))
-    print(fruit_to_remove)
+    fruit_to_remove = [dict_fruit.popitem(False)]
 
-    matrix = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
-    matrix = apply_gravity(matrix)
+    matrix1 = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
+    matrix1 = apply_gravity(matrix1)
 
-    state_stack[depth] = [dict_fruit, matrix]
-    xcoor = fruit_to_remove[0][1][1]
-    ycoor = fruit_to_remove[0][1][2]
+    # def my_game(n, matrix, depth, alpha, beta):
+    if depth != 0:
+        if dict_fruit_has_fruit(dict_fruit):
+            fruit_to_remove.append((dict_fruit.popitem(False)))
+            matrix2 = remove_fruits(matrix, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2], n)
+            matrix2 = apply_gravity(matrix2)
+            game1 = my_game(n, matrix1, depth + 1, alpha, beta)
+            game2 = my_game(n, matrix2, depth + 1, alpha, beta)
+
+            if max_turn == 1:
+                if game1[0] >= game2[0]:
+                    return fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+                else:
+                    return fruit_to_remove[1][1][0], matrix2, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2]
+            else:
+                if game1[0] < game2[0]:
+                    return fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+                else:
+                    return fruit_to_remove[1][1][0], matrix2, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2]
+        else:
+            # game1 = my_game(n, matrix1, depth + 1, alpha, beta)
+            return fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+    else:  # if depth not equal to 0 and not leaf nodes
+        if dict_fruit_has_fruit(dict_fruit):  # has more than one choices to make in fruits
+            fruit_to_remove.append((dict_fruit.popitem(False)))
+            matrix2 = remove_fruits(matrix, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2], n)
+            matrix2 = apply_gravity(matrix2)
+            game1 = my_game(n, matrix1, depth + 1, alpha, beta)
+            game2 = my_game(n, matrix2, depth + 1, alpha, beta)
+            if game1[0] >= game2[0]:
+                best = fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+            else:
+                best = fruit_to_remove[1][1][0], matrix2, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2]
+        else:
+            # best = my_game(n, matrix1, depth + 1, alpha, beta)
+            best = fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+    # state_stack[depth] = [dict_fruit, matrix]
+    xcoor = best[2]
+    ycoor = best[3]
 
     output = open("output.txt", "w")
     output.write(chr(ord('A') + ycoor))
     output.write(str(1 + xcoor))
     output.write("\n")
-    print_output(matrix, output)
+    print_output(best[1], output)
     output.close()
-    return fruit_to_remove[0][1][0]
 
 
 if __name__ == "__main__":
@@ -335,8 +390,6 @@ if __name__ == "__main__":
     p = int(f.readline().strip())
     t = float(f.readline().strip())
 
-    dict_fruit = {x: [0, -1, -1] for x in range(p)}
-    dict_fruit = OrderedDict(dict_fruit)
     matrix = []
     for i in range(n):
         line = []
@@ -348,6 +401,6 @@ if __name__ == "__main__":
         matrix.append(line)
     empty = deepcopy(matrix)
     start = time()
-    print(my_game(n, empty, dict_fruit, 0))
+    print(my_game(n, empty, 0, -maxsize, +maxsize))
     stop = time()
     print(stop - start)
