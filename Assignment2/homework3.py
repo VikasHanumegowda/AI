@@ -128,120 +128,136 @@ def calculate_connectivity(matrix, x, y, n):
 def remove_fruits(matrix, x, y, n):
     # matrix = [cellvalue, visited, sumvalue]
     # return x-coord, y-coord, sumvalue, matrix
-
+    matrix_copy_in_func = deepcopy(matrix)
     found = 0
     if x == y == 0 and n == 1:
-        matrix[x][y][0] = '*'
-        return deepcopy(matrix)
-    matrix[x][y][1] = 2
+        matrix_copy_in_func[x][y][0] = '*'
+        return deepcopy(matrix_copy_in_func)
+    matrix_copy_in_func[x][y][1] = 2
     if x == 0:
         if y == 0:
             # top-left
-            if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y + 1, n)
+            if matrix_copy_in_func[x][y + 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y + 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y + 1, n)
                 found = 1
-            if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x + 1, y, n)
+            if matrix_copy_in_func[x + 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x + 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x + 1, y, n)
                 found = 1
         elif y == n - 1:
             # top-right
-            if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y - 1, n)
+            if matrix_copy_in_func[x][y - 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y - 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y - 1, n)
                 found = 1
-            if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x + 1, y, n)
+            if matrix_copy_in_func[x + 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x + 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x + 1, y, n)
                 found = 1
         else:
             # top-row
-            if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y + 1, n)
+            if matrix_copy_in_func[x][y + 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y + 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y + 1, n)
                 found = 1
-            if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y - 1, n)
+            if matrix_copy_in_func[x][y - 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y - 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y - 1, n)
                 found = 1
-            if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x + 1, y, n)
+            if matrix_copy_in_func[x + 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x + 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x + 1, y, n)
                 found = 1
     elif x == n - 1:
         if y == 0:
             # bottom-left
-            if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y + 1, n)
+            if matrix_copy_in_func[x][y + 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y + 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y + 1, n)
                 found = 1
-            if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x - 1, y, n)
+            if matrix_copy_in_func[x - 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x - 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x - 1, y, n)
                 found = 1
         elif y == n - 1:
             # bottom-right
-            if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y - 1, n)
+            if matrix_copy_in_func[x][y - 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y - 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y - 1, n)
                 found = 1
-            if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x - 1, y, n)
+            if matrix_copy_in_func[x - 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x - 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x - 1, y, n)
                 found = 1
         else:
             # bottom-row
-            if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y + 1, n)
+            if matrix_copy_in_func[x][y + 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y + 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y + 1, n)
                 found = 1
-            if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y - 1, n)
+            if matrix_copy_in_func[x][y - 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y - 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y - 1, n)
                 found = 1
-            if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x - 1, y, n)
+            if matrix_copy_in_func[x - 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x - 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x - 1, y, n)
                 found = 1
     else:
         if y == 0:
             # middle-left
-            if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y + 1, n)
+            if matrix_copy_in_func[x][y + 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y + 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y + 1, n)
                 found = 1
-            if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x - 1, y, n)
+            if matrix_copy_in_func[x - 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x - 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x - 1, y, n)
                 found = 1
-            if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x + 1, y, n)
+            if matrix_copy_in_func[x + 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x + 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x + 1, y, n)
                 found = 1
         elif y == n - 1:
             # middle-right
-            if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y - 1, n)
+            if matrix_copy_in_func[x][y - 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y - 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y - 1, n)
                 found = 1
-            if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x - 1, y, n)
+            if matrix_copy_in_func[x - 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x - 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x - 1, y, n)
                 found = 1
-            if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x + 1, y, n)
+            if matrix_copy_in_func[x + 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x + 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x + 1, y, n)
                 found = 1
         else:
             # middle-middle :-p
-            if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y - 1, n)
+            if matrix_copy_in_func[x][y - 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y - 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y - 1, n)
                 found = 1
-            if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 1:
-                matrix = remove_fruits(matrix, x, y + 1, n)
+            if matrix_copy_in_func[x][y + 1][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x][y + 1][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x, y + 1, n)
                 found = 1
-            if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x - 1, y, n)
+            if matrix_copy_in_func[x - 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x - 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x - 1, y, n)
                 found = 1
-            if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 1:
-                matrix = remove_fruits(matrix, x + 1, y, n)
+            if matrix_copy_in_func[x + 1][y][0] == matrix_copy_in_func[x][y][0] and matrix_copy_in_func[x + 1][y][
+                1] == 1:
+                matrix_copy_in_func = remove_fruits(matrix_copy_in_func, x + 1, y, n)
                 found = 1
 
     if found == 1:
-        matrix[x][y][0] = '*'
-        return deepcopy(matrix)
+        matrix_copy_in_func[x][y][0] = '*'
+        return deepcopy(matrix_copy_in_func)
     else:
-        matrix[x][y][0] = '*'
-        return deepcopy(matrix)
-
-
-def max_level():
-    pass
-
-
-def min_level():
-    pass
+        matrix_copy_in_func[x][y][0] = '*'
+        return deepcopy(matrix_copy_in_func)
 
 
 def rotate(matrix, degree):
@@ -254,10 +270,6 @@ def rotate(matrix, degree):
         return rotate(list(zip(*matrix[::-1])), degree - 90)
     else:
         return rotate(list(zip(*matrix)[::-1]), degree + 90)
-
-
-def index_of_star(row):
-    pass
 
 
 def apply_gravity(grav_matrix):
@@ -301,11 +313,9 @@ def my_game(n, matrix, depth, alpha, beta):
     # matrix = [cellvalue, visited, sumvalue]
     # dictfruit = {0 : [max_value, x-coord, y-coord,matrix]}
 
+    # state_stack = OrderedDict()
+    max_turn, x, y = 0, -1, -1
 
-    state_stack = OrderedDict()
-    max_turn = 0
-    x = -1,
-    y = -1
     if depth >= 4:  # Because level 3 will be Max player
         return -9999, [], x, y
 
@@ -320,7 +330,7 @@ def my_game(n, matrix, depth, alpha, beta):
     for x in range(n):
         for y in range(n):
             if matrix[x][y][0] != '*':
-                x1, y1, z, matrix1 = calculate_connectivity(matrix, x, y, n)
+                x1, y1, z, matrixdummy = calculate_connectivity(matrix, x, y, n)
                 if z > dict_fruit[matrix[x][y][0]][0]:
                     dict_fruit[matrix[x][y][0]][0] = z
                     dict_fruit[matrix[x][y][0]][1] = x1
@@ -333,7 +343,6 @@ def my_game(n, matrix, depth, alpha, beta):
     matrix1 = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
     matrix1 = apply_gravity(matrix1)
 
-    # def my_game(n, matrix, depth, alpha, beta):
     if depth != 0:
         if dict_fruit_has_fruit(dict_fruit):
             fruit_to_remove.append((dict_fruit.popitem(False)))
@@ -344,17 +353,21 @@ def my_game(n, matrix, depth, alpha, beta):
 
             if max_turn == 1:
                 if game1[0] >= game2[0]:
-                    return fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+                    return fruit_to_remove[0][1][0], deepcopy(matrix1), fruit_to_remove[0][1][1], fruit_to_remove[0][1][
+                        2]
                 else:
-                    return fruit_to_remove[1][1][0], matrix2, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2]
+                    return fruit_to_remove[1][1][0], deepcopy(matrix2), fruit_to_remove[1][1][1], fruit_to_remove[1][1][
+                        2]
             else:
                 if game1[0] < game2[0]:
-                    return fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+                    return fruit_to_remove[0][1][0], deepcopy(matrix1), fruit_to_remove[0][1][1], fruit_to_remove[0][1][
+                        2]
                 else:
-                    return fruit_to_remove[1][1][0], matrix2, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2]
+                    return fruit_to_remove[1][1][0], deepcopy(matrix2), fruit_to_remove[1][1][1], fruit_to_remove[1][1][
+                        2]
         else:
-            # game1 = my_game(n, matrix1, depth + 1, alpha, beta)
-            return fruit_to_remove[0][1][0], matrix1, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+            return fruit_to_remove[0][1][0], deepcopy(matrix1), fruit_to_remove[0][1][1], fruit_to_remove[0][1][2]
+
     else:  # if depth not equal to 0 and not leaf nodes
         if dict_fruit_has_fruit(dict_fruit):  # has more than one choices to make in fruits
             fruit_to_remove.append((dict_fruit.popitem(False)))
