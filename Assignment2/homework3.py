@@ -32,97 +32,97 @@ def calculate_connectivity(matrix, x, y, n):
         if y == 0:
             # top-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y + 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y + 1, n)
                 matrix[x][y][2] += a
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x + 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x + 1, y, n)
                 matrix[x][y][2] += a
         elif y == n - 1:
             # top-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y - 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y - 1, n)
                 matrix[x][y][2] += a
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x + 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x + 1, y, n)
                 matrix[x][y][2] += a
         else:
             # top-row
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y + 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y + 1, n)
                 matrix[x][y][2] += a
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y - 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y - 1, n)
                 matrix[x][y][2] += a
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x + 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x + 1, y, n)
                 matrix[x][y][2] += a
     elif x == n - 1:
         if y == 0:
             # bottom-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y + 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y + 1, n)
                 matrix[x][y][2] += a
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x - 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x - 1, y, n)
                 matrix[x][y][2] += a
         elif y == n - 1:
             # bottom-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y - 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y - 1, n)
                 matrix[x][y][2] += a
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x - 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x - 1, y, n)
                 matrix[x][y][2] += a
         else:
             # bottom-row
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y + 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y + 1, n)
                 matrix[x][y][2] += a
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y - 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y - 1, n)
                 matrix[x][y][2] += a
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x - 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x - 1, y, n)
                 matrix[x][y][2] += a
     else:
         if y == 0:
             # middle-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y + 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y + 1, n)
                 matrix[x][y][2] += a
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x - 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x - 1, y, n)
                 matrix[x][y][2] += a
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x + 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x + 1, y, n)
                 matrix[x][y][2] += a
         elif y == n - 1:
             # middle-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y - 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y - 1, n)
                 matrix[x][y][2] += a
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x - 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x - 1, y, n)
                 matrix[x][y][2] += a
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x + 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x + 1, y, n)
                 matrix[x][y][2] += a
         else:
             # middle-middle :-p
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y - 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y - 1, n)
                 matrix[x][y][2] += a
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x, y + 1, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x, y + 1, n)
                 matrix[x][y][2] += a
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x - 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x - 1, y, n)
                 matrix[x][y][2] += a
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                r1, r2, a, matrix = calculate_connectivity(matrix, x + 1, y, n)
+                r1, r2, a, matrix,d = calculate_connectivity(matrix, x + 1, y, n)
                 matrix[x][y][2] += a
 
-    return x, y, matrix[x][y][2], deepcopy(matrix)
+    return x, y, matrix[x][y][2], deepcopy(matrix), matrix[x][y][0]
 
 
 def remove_fruits(matrix, x, y, n):
@@ -340,7 +340,7 @@ def game_helper(n, matrix, depth):
         for y in range(n):
             if matrix[x][y][0] != '*':
                 matrix = unset_visited(matrix)
-                x1, y1, z, matrixdummy = calculate_connectivity(matrix, x, y, n)
+                x1, y1, z, matrixdummy,d = calculate_connectivity(matrix, x, y, n)
                 if matrix[x][y][0] in dict_fruit:
                     if z > dict_fruit[matrix[x][y][0]][0]:
                         dict_fruit[matrix[x][y][0]][0] = z
@@ -407,63 +407,104 @@ def game_helper(n, matrix, depth):
     return alpha, beta
 
 
+def refine_selection(dict_fruit, n):
+    for x in range(n):
+        for y in range(n):
+            dict_fruit = mark_conflicts(n, x, y, dict_fruit)
+    return dict_fruit
+
+
+def mark_conflicts(n, row, col, dict_fruit):
+    for x in range(col, -1, -1):  # leftside
+        if tuple([row, x]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([row, x])][3] != \
+                dict_fruit[tuple([row, col])][3]:
+            break
+        if tuple([row, x]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([row, x])][0] == \
+                dict_fruit[tuple([row, col])][0] and x != col and dict_fruit[tuple([row, x])][3] == \
+                dict_fruit[tuple([row, col])][3]:
+            del dict_fruit[tuple([row, x])]
+
+    for x in range(col, n):  # rightside
+        if tuple([row, x]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([row, x])][3] != \
+                dict_fruit[tuple([row, col])][3]:
+            break
+        if tuple([row, x]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([row, x])][0] == \
+                dict_fruit[tuple([row, col])][0] and x != col and dict_fruit[tuple([row, x])][3] == \
+                dict_fruit[tuple([row, col])][3]:
+            del dict_fruit[tuple([row, x])]
+
+    for x in range(row, -1, -1):  # top
+        if tuple([x, col]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([x, col])][3] != \
+                dict_fruit[tuple([row, col])][3]:
+            break
+        if tuple([x, col]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([x, col])][0] == \
+                dict_fruit[tuple([row, col])][0] and x != row and dict_fruit[tuple([x, col])][3] == \
+                dict_fruit[tuple([row, col])][3]:
+            del dict_fruit[tuple([x, col])]
+
+    for x in range(row, n):  # bottom
+        if tuple([x, col]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([x, col])][3] != \
+                dict_fruit[tuple([row, col])][3]:
+            break
+        if tuple([x, col]) in dict_fruit and tuple([row, col]) in dict_fruit and dict_fruit[tuple([x, col])][0] == \
+                dict_fruit[tuple([row, col])][0] and x != row and dict_fruit[tuple([x, col])][3] == \
+                dict_fruit[tuple([row, col])][3]:
+            del dict_fruit[tuple([x, col])]
+
+        return deepcopy(dict_fruit)
+
+
 def my_game(n, matrix, alpha, beta):
     # matrix = [cellvalue, visited, sumvalue]
     # dictfruit = {0 : [max_value, x-coord, y-coord]}
 
     # returns number_of_elements_removed, matrix_after_removal, x_coord, y_coord
-
-
     dict_fruit = {}
-    # dict_fruit = {x: [0, -1, -1] for x in range(p)}
     dict_fruit = OrderedDict(dict_fruit)
-
+    empty = deepcopy(matrix)
     for x in range(n):
         for y in range(n):
             if matrix[x][y][0] != '*':
-                x1, y1, z, matrixdummy = calculate_connectivity(matrix, x, y, n)
-                if matrix[x][y][0] in dict_fruit:
-                    if z > dict_fruit[matrix[x][y][0]][0]:
-                        dict_fruit[matrix[x][y][0]][0] = z
-                        dict_fruit[matrix[x][y][0]][1] = x1
-                        dict_fruit[matrix[x][y][0]][2] = y1
-                else:
-                    dict_fruit[matrix[x][y][0]] = [0, -1, -1]
-                    dict_fruit[matrix[x][y][0]][0] = z
-                    dict_fruit[matrix[x][y][0]][1] = x1
-                    dict_fruit[matrix[x][y][0]][2] = y1
-
+                matrix = deepcopy(empty)
+                x1, y1, z, matrixdummy, v = calculate_connectivity(matrix, x, y, n)
+                dict_fruit[tuple([x, y])] = [0, -1, -1, 0]
+                dict_fruit[tuple([x, y])][0] = z
+                dict_fruit[tuple([x, y])][1] = x1
+                dict_fruit[tuple([x, y])][2] = y1
+                dict_fruit[tuple([x, y])][3] = v
     dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
 
-    fruit_to_remove = [dict_fruit.popitem(False)]
+    for x in dict_fruit.items():
+        print(x)
+    dict_fruit = refine_selection(deepcopy(dict_fruit), n)
 
-    matrix1 = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
-    matrix1 = apply_gravity(matrix1)
-    if len(dict_fruit) > 0:
-        fruit_to_remove.append((dict_fruit.popitem(False)))
-        matrix2 = remove_fruits(matrix, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2], n)
-        matrix2 = apply_gravity(matrix2)
-        game1 = game_helper(n, matrix1, 1)
-        game2 = game_helper(n, matrix2, 1)
-        output = open("output.txt", "w")
-        if game1[0] > game2[0]:
+    for x in dict_fruit.items():
+        fruit_to_remove = [x]
+    # fruit_to_remove = [dict_fruit.popitem(False)]
+
+        matrix1 = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
+        matrix1 = apply_gravity(matrix1)
+        ?? game1 = game_helper(n, matrix1, 1)
+            game2 = game_helper(n, matrix2, 1)
+            output = open("output.txt", "w")
+            if game1[0] > game2[0]:
+                output.write(chr(ord('A') + fruit_to_remove[0][1][1]))
+                output.write(str(1 + fruit_to_remove[0][1][2]))
+                output.write("\n")
+                print_output(matrix1, output)
+            else:
+                output.write(chr(ord('A') + fruit_to_remove[1][1][1]))
+                output.write(str(1 + fruit_to_remove[1][1][2]))
+                output.write("\n")
+                print_output(matrix2, output)
+            output.close()
+        else:
+            output = open("output.txt", "w")
             output.write(chr(ord('A') + fruit_to_remove[0][1][1]))
             output.write(str(1 + fruit_to_remove[0][1][2]))
             output.write("\n")
             print_output(matrix1, output)
-        else:
-            output.write(chr(ord('A') + fruit_to_remove[1][1][1]))
-            output.write(str(1 + fruit_to_remove[1][1][2]))
-            output.write("\n")
-            print_output(matrix2, output)
-        output.close()
-    else:
-        output = open("output.txt", "w")
-        output.write(chr(ord('A') + fruit_to_remove[0][1][1]))
-        output.write(str(1 + fruit_to_remove[0][1][2]))
-        output.write("\n")
-        print_output(matrix1, output)
-        output.close()
+            output.close()
 
 
 if __name__ == "__main__":
