@@ -24,9 +24,8 @@ def print_output(matrix, f):
 def calculate_connectivity(matrix, x, y, n):
     # matrix = [cellvalue, visited, sumvalue]
     # return x-coord, y-coord, sumvalue, matrix
-
     if x == y == 0 and n == 1:
-        return x, y, matrix[x][y][0], deepcopy(matrix)
+        return  x, y, matrix[x][y][2], deepcopy(matrix), matrix[x][y][0]
     matrix[x][y][1] = 1
     if x == 0:
         if y == 0:
@@ -323,89 +322,6 @@ def reset_visited(matrix):
     return deepcopy(matrix)
 
 
-def game_helper(n, matrix, depth):
-    # returns alpha beta values
-    max_turn, x, y, alpha, beta = 0, -1, -1, 0, 0
-
-    if depth % 2 == 1:
-        pass
-    else:
-        max_turn = 1
-
-    dict_fruit = {}
-    # dict_fruit = {x: [0, -1, -1] for x in range(p)}
-    dict_fruit = OrderedDict(dict_fruit)
-
-    for x in range(n):
-        for y in range(n):
-            if matrix[x][y][0] != '*':
-                matrix = unset_visited(matrix)
-                x1, y1, z, matrixdummy,d = calculate_connectivity(matrix, x, y, n)
-                if matrix[x][y][0] in dict_fruit:
-                    if z > dict_fruit[matrix[x][y][0]][0]:
-                        dict_fruit[matrix[x][y][0]][0] = z
-                        dict_fruit[matrix[x][y][0]][1] = x1
-                        dict_fruit[matrix[x][y][0]][2] = y1
-                else:
-                    dict_fruit[matrix[x][y][0]] = [0, -1, -1]
-                    dict_fruit[matrix[x][y][0]][0] = z
-                    dict_fruit[matrix[x][y][0]][1] = x1
-                    dict_fruit[matrix[x][y][0]][2] = y1
-
-    dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
-
-    fruit_to_remove = [dict_fruit.popitem(False)]
-    if depth == 3:
-        beta = fruit_to_remove[0][1][0] ** 2
-        return alpha, beta
-    matrix = reset_visited(matrix)
-    matrix1 = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
-    matrix1 = apply_gravity(matrix1)
-
-    if max_turn == 1:
-        # if depth != 0:
-        if len(dict_fruit) > 0:
-            fruit_to_remove.append((dict_fruit.popitem(False)))
-            matrix = reset_visited(matrix)
-            matrix2 = remove_fruits(matrix, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2], n)
-            matrix2 = apply_gravity(matrix2)
-
-            # alpha = deepcopy(game1) if game1[0] > game2[0] else deepcopy(game2)
-            alpha1 = fruit_to_remove[0][1][0] ** 2 + game_helper(n, matrix1, depth + 1)[0]
-            beta1 = game_helper(n, matrix1, depth + 1)[1]
-
-            alpha2 = fruit_to_remove[1][1][0] ** 2 + game_helper(n, matrix2, depth + 1)[0]
-            beta2 = game_helper(n, matrix2, depth + 1)[1]
-
-            alpha = max(alpha1, alpha2)
-            beta = max(beta1, beta2)
-        else:
-            alpha = fruit_to_remove[0][1][0] ** 2 + game_helper(n, matrix1, depth + 1)[0]
-            beta = game_helper(n, matrix1, depth + 1)[1]
-
-    else:
-        if len(dict_fruit) > 0:
-            fruit_to_remove.append((dict_fruit.popitem(False)))
-            matrix = reset_visited(matrix)
-            matrix2 = remove_fruits(matrix, fruit_to_remove[1][1][1], fruit_to_remove[1][1][2], n)
-            matrix2 = apply_gravity(matrix2)
-
-            # alpha = deepcopy(game1) if game1[0] > game2[0] else deepcopy(game2)
-            alpha1 = game_helper(n, matrix1, depth + 1)[0]
-            beta1 = fruit_to_remove[0][1][0] ** 2 + game_helper(n, matrix1, depth + 1)[1]
-
-            alpha2 = game_helper(n, matrix2, depth + 1)[0]
-            beta2 = fruit_to_remove[1][1][0] ** 2 + game_helper(n, matrix2, depth + 1)[1]
-
-            alpha = max(alpha1, alpha2)
-            beta = max(beta1, beta2)
-        else:
-            # game1 = game_helper(n, matrix1, depth + 1, alpha, beta)
-            alpha = game_helper(n, matrix1, depth + 1)[0]
-            beta = fruit_to_remove[0][1][0] ** 2 + game_helper(n, matrix1, depth + 1)[1]
-
-    return alpha, beta
-
 
 def refine_selection(dict_fruit, n):
     for x in range(n):
@@ -454,7 +370,7 @@ def mark_conflicts(n, row, col, dict_fruit):
         return deepcopy(dict_fruit)
 
 
-def my_game(n, matrix, alpha, beta):
+def my_game(n, matrix, alpha, beta, ismaxplayer, myvalue, oppvalue):
     # matrix = [cellvalue, visited, sumvalue]
     # dictfruit = {0 : [max_value, x-coord, y-coord]}
 
@@ -473,10 +389,13 @@ def my_game(n, matrix, alpha, beta):
                 dict_fruit[tuple([x, y])][2] = y1
                 dict_fruit[tuple([x, y])][3] = v
     dict_fruit = OrderedDict(reversed(sorted(dict_fruit.items(), key=lambda h: h[1][0])))
+    if len(dict_fruit)==0:
+        return myvalue-oppvalue
 
-    for x in dict_fruit.items():
-        print(x)
-    dict_fruit = refine_selection(deepcopy(dict_fruit), n)
+    if ismaxplayer:
+        for x in dict_fruit.items():
+            print(x)
+        dict_fruit = refine_selection(deepcopy(dict_fruit), n)
 
     for x in dict_fruit.items():
         fruit_to_remove = [x]
@@ -484,27 +403,6 @@ def my_game(n, matrix, alpha, beta):
 
         matrix1 = remove_fruits(matrix, fruit_to_remove[0][1][1], fruit_to_remove[0][1][2], n)
         matrix1 = apply_gravity(matrix1)
-        ?? game1 = game_helper(n, matrix1, 1)
-            game2 = game_helper(n, matrix2, 1)
-            output = open("output.txt", "w")
-            if game1[0] > game2[0]:
-                output.write(chr(ord('A') + fruit_to_remove[0][1][1]))
-                output.write(str(1 + fruit_to_remove[0][1][2]))
-                output.write("\n")
-                print_output(matrix1, output)
-            else:
-                output.write(chr(ord('A') + fruit_to_remove[1][1][1]))
-                output.write(str(1 + fruit_to_remove[1][1][2]))
-                output.write("\n")
-                print_output(matrix2, output)
-            output.close()
-        else:
-            output = open("output.txt", "w")
-            output.write(chr(ord('A') + fruit_to_remove[0][1][1]))
-            output.write(str(1 + fruit_to_remove[0][1][2]))
-            output.write("\n")
-            print_output(matrix1, output)
-            output.close()
 
 
 if __name__ == "__main__":
@@ -526,4 +424,4 @@ if __name__ == "__main__":
                 line.append([x, 0, 1])
         matrix.append(line)
     empty = deepcopy(matrix)
-    my_game(n, empty, 0, 0)
+    matrix = my_game(n, empty, -maxsize, maxsize, True, 0, 0)
