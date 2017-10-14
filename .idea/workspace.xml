@@ -3,17 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3c0bfb7f-ccc0-443a-9b9d-375147259c92" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/homework3_all_files.py" afterPath="$PROJECT_DIR$/Assignment1/homework3_all_files.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output1.txt" afterPath="$PROJECT_DIR$/Assignment1/output1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output10.txt" afterPath="$PROJECT_DIR$/Assignment1/output10.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output2.txt" afterPath="$PROJECT_DIR$/Assignment1/output2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output3.txt" afterPath="$PROJECT_DIR$/Assignment1/output3.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output4.txt" afterPath="$PROJECT_DIR$/Assignment1/output4.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output5.txt" afterPath="$PROJECT_DIR$/Assignment1/output5.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output6.txt" afterPath="$PROJECT_DIR$/Assignment1/output6.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output7.txt" afterPath="$PROJECT_DIR$/Assignment1/output7.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output8.txt" afterPath="$PROJECT_DIR$/Assignment1/output8.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/output9.txt" afterPath="$PROJECT_DIR$/Assignment1/output9.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -793,7 +782,14 @@
       <option name="project" value="LOCAL" />
       <updated>1507926904920</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Test cases for HW1">
+      <created>1507955057954</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1507955057954</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TodoView">
@@ -849,7 +845,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="files closed after use" />
     <MESSAGE value="simulated annealing begin" />
     <MESSAGE value="Simulated Annealing - TBD" />
     <MESSAGE value="Simulated Annealing - TBD&#10;&#10;Procrastination :-|" />
@@ -874,7 +869,8 @@
     <MESSAGE value="Now it learns what the fruits are in the input instead of having a dict which has all fruits' values set to some initial value." />
     <MESSAGE value="Something's messed up. See if you can debug. Checking out previous commit/s is the better option." />
     <MESSAGE value="Smart but slow agent born!!&#10;Have to look into pynum and stuff for optimisation and swiftness :-p" />
-    <option name="LAST_COMMIT_MESSAGE" value="Smart but slow agent born!!&#10;Have to look into pynum and stuff for optimisation and swiftness :-p" />
+    <MESSAGE value="Test cases for HW1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test cases for HW1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
