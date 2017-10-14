@@ -287,8 +287,8 @@ if __name__ == "__main__":
             return p, board
         return -1, board
 
-    for xfiles in range(1,11):
-        f = open("input"+str(xfiles)+".txt", "r")
+    for xfiles in range(1,21):
+        f = open("SA("+str(xfiles)+").txt", "r")
         bfs_dfs = f.readline().strip()  # for the first line retrieval
         # print(bfs_dfs)
         n = int(f.readline().strip())  # Size of square board
