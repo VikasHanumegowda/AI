@@ -131,27 +131,8 @@ def calculate_connectivity(matrix, x, y, n):
 
     return x, y, matrix[x][y][2], deepcopy(matrix)  # , matrix[x][y][0]
 
-# def send_group_count_all(matrix, x, y, n, cellcount):
-#     # matrix, cellcount =  [cellvalue, visited, sumvalue]
-#     # return x-coord, y-coord, sumvalue, matrix,
-#     if x == y == 0 and n == 1:
-#         matrix[x][y][0] = cellcount
-#         return deepcopy(matrix)
-#     if x == -1 or y == -1 or x == n or y == n:
-#         return deepcopy(matrix)  # , matrix[x][y][0]
-#     matrix[x][y][1] = 1
-#     if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-#         matrix = send_group_count_all(matrix, x, y + 1, n, cellcount)
-#     if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-#         matrix = send_group_count_all(matrix, x + 1, y, n, cellcount)
-#     if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-#         matrix = send_group_count_all(matrix, x, y - 1, n, cellcount)
-#     if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-#         matrix = send_group_count_all(matrix, x - 1, y, n, cellcount)
-#     matrix[x][y][0] = cellcount
-#     return deepcopy(matrix)
 
-def send_group_count_all(matrix, x, y, n, cellcount):
+def send_group_count_to_all(matrix, x, y, n, cellcount):
     # matrix, cellcount =  [cellvalue, visited, sumvalue]
     # return x-coord, y-coord, sumvalue, matrix,
     if x == y == 0 and n == 1:
@@ -161,71 +142,71 @@ def send_group_count_all(matrix, x, y, n, cellcount):
         if y == 0:
             # top-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y + 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y + 1, n, cellcount)
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x + 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x + 1, y, n, cellcount)
         elif y == n - 1:
             # top-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y - 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y - 1, n, cellcount)
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x + 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x + 1, y, n, cellcount)
         else:
             # top-row
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y + 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y + 1, n, cellcount)
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y - 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y - 1, n, cellcount)
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x + 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x + 1, y, n, cellcount)
     elif x == n - 1:
         if y == 0:
             # bottom-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y + 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y + 1, n, cellcount)
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x - 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x - 1, y, n, cellcount)
         elif y == n - 1:
             # bottom-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y - 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y - 1, n, cellcount)
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x - 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x - 1, y, n, cellcount)
         else:
             # bottom-row
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y + 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y + 1, n, cellcount)
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y - 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y - 1, n, cellcount)
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x - 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x - 1, y, n, cellcount)
     else:
         if y == 0:
             # middle-left
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y + 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y + 1, n, cellcount)
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x - 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x - 1, y, n, cellcount)
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x + 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x + 1, y, n, cellcount)
         elif y == n - 1:
             # middle-right
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y - 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y - 1, n, cellcount)
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x - 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x - 1, y, n, cellcount)
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x + 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x + 1, y, n, cellcount)
         else:
             # middle-middle :-p
             if matrix[x][y - 1][0] == matrix[x][y][0] and matrix[x][y - 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y - 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y - 1, n, cellcount)
             if matrix[x][y + 1][0] == matrix[x][y][0] and matrix[x][y + 1][1] == 0:
-                matrix =  send_group_count_all(matrix, x, y + 1, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x, y + 1, n, cellcount)
             if matrix[x - 1][y][0] == matrix[x][y][0] and matrix[x - 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x - 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x - 1, y, n, cellcount)
             if matrix[x + 1][y][0] == matrix[x][y][0] and matrix[x + 1][y][1] == 0:
-                matrix =  send_group_count_all(matrix, x + 1, y, n, cellcount)
+                matrix =  send_group_count_to_all(matrix, x + 1, y, n, cellcount)
     matrix[x][y][0] = cellcount
     return deepcopy(matrix)
 
@@ -466,17 +447,17 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
                 matrix = unset_visited(matrix)
                 x1, y1, z, matrix_dummy = calculate_connectivity(matrix, x, y, n)
                 matrix = unset_visited(matrix)
-                matrix = send_group_count_all(matrix, x, y, n, '*')
+                matrix = send_group_count_to_all(matrix, x, y, n, '*')
                 dict_fruit.append([z, x1, y1])# number of cells,  x coordinate, y coordinate
-                print()
-                print_matrix_only_value(matrix)
-                print()
+                # print()
+                # print_matrix_only_value(matrix)
+                # print()
     matrix = deepcopy(empty)
     dict_fruit = deque(reversed(sorted(dict_fruit, key=lambda h: h[0])))
-    max_depth = 1 if time <= 5 else 2
-    if len(dict_fruit) == 0 or depth == max_depth:
+    # max_depth = 1 if time <= 5 else 2
+    if len(dict_fruit) == 0 or depth == 3:
         return my_value - opp_value
-    dict_fruit = refine_selection(dict_fruit, n)
+    # dict_fruit = refine_selection(dict_fruit, n)
     dict_fruit = deque(reversed(sorted(dict_fruit, key=lambda h: h[0])))
     if is_max_player:
         best_value, mat_ret = -maxsize, []
@@ -498,8 +479,7 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
         while min(4, len(dict_fruit)) > 0:
             fruit_to_remove = dict_fruit.popleft()
             opp_value += fruit_to_remove[0] ** 2
-            matrix1 = remove_fruits(matrix, fruit_to_remove[1], fruit_to_remove[2], n)
-            matrix1 = apply_gravity(matrix1)
+            matrix1 = apply_gravity(remove_fruits(matrix, fruit_to_remove[1], fruit_to_remove[2], n))
             if first_move:
                 mat_ret, x_used, y_used = deepcopy(matrix1), fruit_to_remove[1], fruit_to_remove[2]
             value = my_game(n, matrix1, alpha, beta, True, my_value, opp_value, depth + 1, False, t)
@@ -544,5 +524,6 @@ if __name__ == "__main__":
     print()
     print_matrix_only_value(matrix)
     print(end-start)
+    print(value)
     print_output(matrix, output)
     output.close()
