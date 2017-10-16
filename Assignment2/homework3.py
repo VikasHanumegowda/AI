@@ -1,4 +1,5 @@
-from collections import OrderedDict, Counter, deque
+from __future__ import print_function
+from collections import Counter, deque
 from copy import deepcopy
 from time import time
 from sys import maxsize
