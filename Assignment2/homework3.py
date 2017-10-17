@@ -489,6 +489,11 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
             time3 = time()
             time_spent += time3 - time2
             value = my_game(n, matrix1, alpha, beta, False, my_value, opp_value, depth + 1, False, time_spent, t)
+            if deadline_time - time_spent <= 5 or n >= 15:
+                if first_move:
+                    return matrix1, my_value - opp_value, fruit_to_remove[1], fruit_to_remove[2]
+                else:
+                    return my_value - opp_value
             if first_move:
                 if best_value < value:
                     best_value = value
@@ -507,6 +512,11 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
             time3 = time()
             time_spent += time3 - time2
             value = my_game(n, matrix1, alpha, beta, True, my_value, opp_value, depth + 1, False, time_spent, t)
+            if deadline_time - time_spent <= 5 or n >= 15:
+                if first_move:
+                    return matrix1, my_value - opp_value, fruit_to_remove[1], fruit_to_remove[2]
+                else:
+                    return my_value - opp_value
             best_value = min(best_value, value)
             beta = min(beta, best_value)
             if beta <= alpha:
