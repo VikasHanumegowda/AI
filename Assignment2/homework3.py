@@ -1,4 +1,4 @@
-from __future__ import print_function
+# from __future__ import print_function
 from collections import Counter, deque
 from copy import deepcopy
 from time import time
@@ -423,13 +423,13 @@ def refine_selection(dict_fruit1, n):
     if l <= 2 * n:
         pass
     elif l <= 25:
-        dict_fruit = [dict_fruit[x] for x in range(math.floor(l / 2))]
+        dict_fruit = [dict_fruit[x] for x in range(int(math.floor(l / 2)))]
     elif l <= 40:
-        dict_fruit = [dict_fruit[x] for x in range(math.floor(l / 3))]
+        dict_fruit = [dict_fruit[x] for x in range(int(math.floor(l / 3)))]
     elif l <= 70:
-        dict_fruit = [dict_fruit[x] for x in range(math.floor(l / 4))]
+        dict_fruit = [dict_fruit[x] for x in range(int(math.floor(l / 4)))]
     else:
-        dict_fruit = [dict_fruit[x] for x in range(math.floor(l / 5))]
+        dict_fruit = [dict_fruit[x] for x in range(int(math.floor(l / 5)))]
     return deepcopy(dict_fruit)
 
 
@@ -446,26 +446,27 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
     for x in range(n):
         for y in range(n):
             if matrix[x][y][0] != '*':
-                matrix = unset_visited(matrix)
+                # matrix = unset_visited(matrix)
+                matrix = unset_visited(empty)
                 x1, y1, z, matrix_dummy = calculate_connectivity(matrix, x, y, n)
                 # z = calculate_connectivity(matrix, x, y, n)
                 matrix = unset_visited(matrix)
                 matrix = send_group_count_to_all(matrix, x, y, n, '*')
-                dict_fruit.append([z, x1, y1])  # number of cells,  x coordinate, y coordinate
+                dict_fruit.append([z, x1, y1, deepcopy(matrix)])  # number of cells,  x coordinate, y coordinate
                 # print()
                 # print_matrix_only_value(matrix)
                 # print()
     matrix = deepcopy(empty)
     dict_fruit = deque(reversed(sorted(dict_fruit, key=lambda h: h[0])))
     if len(dict_fruit)>0:
-        temp_mat = apply_gravity(remove_fruits(matrix, dict_fruit[0][1], dict_fruit[0][2], n))
+        temp_mat = apply_gravity(dict_fruit[0][3])
     else:
         temp_mat = deepcopy(matrix)
     # max_depth = 1 if time <= 5 else 2
     before_check = time()
     time_spent += before_check - at_start_game
     time2 = time()
-    if deadline_time - time_spent <= 2:
+    if deadline_time - time_spent <= 5 or n >= 15:
         if first_move:
             return temp_mat, my_value - opp_value, dict_fruit[0][1], dict_fruit[0][2]
         else:
@@ -473,6 +474,7 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
     if len(dict_fruit) == 0 or depth == 3:
         return my_value - opp_value
     mat_ret = []
+    x_used = y_used = 0
     if is_max_player:
         best_value = -maxsize
         x_used = y_used = 0
@@ -519,8 +521,8 @@ if __name__ == "__main__":
     p = int(f.readline().strip())
     t = float(f.readline().strip())
     print(n)
-    print(p)
-    print(t)
+    # print(p)
+    # print(t)
     matrix = []
     for i in range(n):
         line = []
@@ -541,8 +543,8 @@ if __name__ == "__main__":
     output.write(str(1 + xv))
     output.write("\n")
     print()
-    print_matrix_only_value(matrix)
+    # print_matrix_only_value(matrix)
     print(end - start)
-    print(value)
+    # print(value)
     print_output(matrix, output)
     output.close()
