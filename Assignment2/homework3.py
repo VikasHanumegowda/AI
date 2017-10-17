@@ -441,7 +441,7 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
     at_start_game = time()
     dict_fruit = deque([])
     empty = deepcopy(matrix)
-
+    # y - AB; x - 123
     # connectivity check
     for x in range(n):
         for y in range(n):
@@ -453,6 +453,11 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
                 matrix = unset_visited(matrix)
                 matrix = send_group_count_to_all(matrix, x, y, n, '*')
                 dict_fruit.append([z, x1, y1, deepcopy(matrix)])  # number of cells,  x coordinate, y coordinate
+                # if deadline_time - time_spent <= 5 or n >= 15:
+                #     if first_move:
+                #         return dict_fruit[-1][3], dict_fruit[-1][0]**2, x, y
+                #     else:
+                #         return my_value - opp_value
                 # print()
                 # print_matrix_only_value(matrix)
                 # print()
@@ -464,8 +469,8 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
         temp_mat = deepcopy(matrix)
     # max_depth = 1 if time <= 5 else 2
     before_check = time()
-    time_spent += before_check - at_start_game
     time2 = time()
+    time_spent += before_check - at_start_game
     if deadline_time - time_spent <= 5 or n >= 15:
         if first_move:
             return temp_mat, my_value - opp_value, dict_fruit[0][1], dict_fruit[0][2]
@@ -520,7 +525,7 @@ if __name__ == "__main__":
     n = int(f.readline().strip())
     p = int(f.readline().strip())
     t = float(f.readline().strip())
-    print(n)
+    # print(n)
     # print(p)
     # print(t)
     matrix = []
@@ -533,7 +538,7 @@ if __name__ == "__main__":
                 line.append([x, 0, 1])
         matrix.append(line)
     empty = deepcopy(matrix)
-    print_matrix_only_value(empty)
+    # print_matrix_only_value(empty)
     start = time()
     before_game = time()
     matrix, value, xv, yv = my_game(n, empty, -maxsize, maxsize, True, 0, 0, 0, True, before_game - start, t)
@@ -545,6 +550,6 @@ if __name__ == "__main__":
     print()
     # print_matrix_only_value(matrix)
     print(end - start)
-    # print(value)
+    print(value)
     print_output(matrix, output)
     output.close()
