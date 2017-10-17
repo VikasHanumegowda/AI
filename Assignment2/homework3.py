@@ -1,4 +1,4 @@
-# from __future__ import print_function
+from __future__ import print_function
 from collections import Counter, deque
 from copy import deepcopy
 from time import time
@@ -131,7 +131,6 @@ def calculate_connectivity(matrix, x, y, n):
                 matrix[x][y][2] += a
 
     return x, y, matrix[x][y][2], deepcopy(matrix)  # , matrix[x][y][0]
-
 
 
 def send_group_count_to_all(matrix, x, y, n, cellcount):
@@ -463,7 +462,7 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
                 # print()
     matrix = deepcopy(empty)
     dict_fruit = deque(reversed(sorted(dict_fruit, key=lambda h: h[0])))
-    if len(dict_fruit)>0:
+    if len(dict_fruit) > 0:
         temp_mat = apply_gravity(dict_fruit[0][3])
     else:
         temp_mat = deepcopy(matrix)
@@ -476,7 +475,7 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
             return temp_mat, my_value - opp_value, dict_fruit[0][1], dict_fruit[0][2]
         else:
             return my_value - opp_value
-    if len(dict_fruit) == 0 or depth == 3:
+    if len(dict_fruit) == 0 or depth == 4:
         return my_value - opp_value
     mat_ret = []
     x_used = y_used = 0
@@ -552,4 +551,5 @@ if __name__ == "__main__":
     print(end - start)
     print(value)
     print_output(matrix, output)
+    f.close()
     output.close()
