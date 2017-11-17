@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c0bfb7f-ccc0-443a-9b9d-375147259c92" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Assignment3/input.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment3/homework3.py" afterPath="$PROJECT_DIR$/Assignment3/homework3.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,8 +40,8 @@
       <file leaf-file-name="input.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assignment3/input.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="6" lean-forward="false" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+            <state relative-caret-position="285">
+              <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -537,13 +535,6 @@
       <option name="presentableId" value="Default" />
       <updated>1504566293549</updated>
     </task>
-    <task id="LOCAL-00001" summary="Initial commit">
-      <created>1504715242488</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1504715242488</updated>
-    </task>
     <task id="LOCAL-00002" summary="DEADend by confusion between iteration and recursion">
       <created>1504854754263</created>
       <option name="number" value="00002" />
@@ -880,7 +871,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510960312315</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="sample input file">
+      <created>1510960597070</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1510960597071</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -936,7 +934,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="game loop figured out" />
     <MESSAGE value="stuck at marking picked fruits" />
     <MESSAGE value="Picking fruits done finally :-D" />
     <MESSAGE value="Gravity implemented" />
@@ -961,7 +958,8 @@
     <MESSAGE value="script to run the agent with itself" />
     <MESSAGE value="future library module import (compatibility with python 2) removed sinec vocareum surely has python 3" />
     <MESSAGE value="Homework 3 init" />
-    <option name="LAST_COMMIT_MESSAGE" value="Homework 3 init" />
+    <MESSAGE value="sample input file" />
+    <option name="LAST_COMMIT_MESSAGE" value="sample input file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1317,8 +1315,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assignment3/input.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="6" lean-forward="false" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+        <state relative-caret-position="285">
+          <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
           <folding />
         </state>
       </provider>
