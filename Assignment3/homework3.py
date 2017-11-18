@@ -2,9 +2,10 @@ from copy import deepcopy
 
 predicates_g = set()
 constants = set()
-queries = set() #
-stmts = set() #
-kkb = {}
+queries = set()  #
+stmts = set()  #
+kb = {}
+
 
 def get_predicates(sentence):
     parts = []
@@ -16,15 +17,12 @@ def get_predicates(sentence):
     for x in parts:
         if '~' in x:
             predicate = x[x.index('~') + 1:x.index('(')]
-            predicate = predicate.strip()
-            predicates_g.add(predicate)
-            ret.append(predicate)
         else:
             predicate = x[:x.index('(')]
-            predicate = predicate.strip()
-            predicates_g.add(predicate)
-            ret.append(predicate)
-    print("ret"+str(ret))
+        predicate = predicate.strip()
+        predicates_g.add(predicate)
+        ret.append(predicate)
+    print("predicates:" + str(ret))
     return deepcopy(ret)
 
 
@@ -38,20 +36,28 @@ def get_constants(query):
         constants.add(constant)
     return deepcopy(constant)
 
-def process_statements():
-    for query in queries:
-        #get predicate
-        print(query)
-        print(get_predicates(query))
-        print(get_constants(query))
-        for y in stmts
+
+def build_kb():
+    for y in stmts:
+        pred = get_predicates(y)
+        for x in pred:
+            if y.index(x) == 0:
+                kb[x]['+'].add(y)
+            elif y[y.index(x) - 1] == '~':
+                kb[x]['-'].add(y)
+            else:
+                kb[x]['+'].add(y)
 
 
+def get_positivity(query):
+    return '+' if query[0] == '~' else '-'
+
+def unify(a, b):
+    pass
 
 if __name__ == "__main__":
     with open("input.txt", "r") as file:
         n_queries = int(file.readline().strip())
-        print(n_queries)
 
         for x in range(n_queries):
             query = file.readline().strip()
@@ -63,13 +69,25 @@ if __name__ == "__main__":
             stmt = file.readline().strip()
             stmts.add(stmt)
             get_predicates(stmt)
-        #for x in predicates_g:
-        #    print("p:"+str(x))
 
-        dict_p = {p:{'+':{},'-':{}} for p in predicates_g}
+        kb = {p: {'+': set(), '-': set()} for p in predicates_g}
 
-        process_statements()
+        build_kb()
 
+        # for q in queries:
+        #     pred = get_predicates(q)
+        #     for dict_st
+        print(stmts)
+        print(queries)
+        print(predicates_g)
+        print(constants)
 
-        #print(constants)
-        print(dict_p)
+        for x in kb.items():
+            print(x)
+
+        for query in queries:
+            query_predicate = get_predicates(query)
+            query_constants = get_constants(query)
+            query_sign = get_positivity(query)
+            for stmt in kb[query_predicate][query_sign]:
+                result = unify(query, stmt)
