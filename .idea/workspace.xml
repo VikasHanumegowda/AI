@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c0bfb7f-ccc0-443a-9b9d-375147259c92" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Assignment3/parser.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Assignment3/input.txt" afterPath="" />
+    <list default="true" id="3c0bfb7f-ccc0-443a-9b9d-375147259c92" name="Default" comment="parser_tree created - logic">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Assignment3/parser_tree.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment3/homework3.py" afterPath="$PROJECT_DIR$/Assignment3/homework3.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -58,7 +56,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parser.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assignment3/parser.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
@@ -66,6 +64,16 @@
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parser_tree.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assignment3/parser_tree.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -188,6 +196,7 @@
         <option value="$PROJECT_DIR$/Assignment3/homework3.py" />
         <option value="$PROJECT_DIR$/Assignment2/homework3.py" />
         <option value="$PROJECT_DIR$/Assignment3/parser.py" />
+        <option value="$PROJECT_DIR$/Assignment3/parser_tree.py" />
       </list>
     </option>
   </component>
@@ -561,13 +570,6 @@
       <option name="presentableId" value="Default" />
       <updated>1504566293549</updated>
     </task>
-    <task id="LOCAL-00006" summary="Rotate matrix 90° 4 times implemented for finding solutions not starting with first row.&#10;Many bugs need to be fixed regarding trees.">
-      <created>1505238109955</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1505238109955</updated>
-    </task>
     <task id="LOCAL-00007" summary="Rotate matrix 90° 4 times implemented for finding solutions not starting with first row.&#10;Many bugs need to be fixed regarding trees.">
       <created>1505252600924</created>
       <option name="number" value="00007" />
@@ -904,7 +906,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510989599253</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="decision to use ply (clue from online repo) made">
+      <created>1511059218638</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1511059218640</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -960,7 +969,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Game playing agent without alpha beta pruning implemented" />
     <MESSAGE value="Interesting test case where 2nd player wins without pruning" />
     <MESSAGE value="Debugging required" />
     <MESSAGE value="Bebuged the bizarre  output but min-max yet to be implemented and alpha beta pruning too :-0" />
@@ -985,7 +993,8 @@
     <MESSAGE value="dict of predicates (dict of dict of dict)" />
     <MESSAGE value="some progress towards processing the KB" />
     <MESSAGE value="kb built : dict of dict of dict" />
-    <option name="LAST_COMMIT_MESSAGE" value="kb built : dict of dict of dict" />
+    <MESSAGE value="decision to use ply (clue from online repo) made" />
+    <option name="LAST_COMMIT_MESSAGE" value="decision to use ply (clue from online repo) made" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1016,13 +1025,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assignment1/input7.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -1344,6 +1346,14 @@
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assignment3/parser_tree.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
