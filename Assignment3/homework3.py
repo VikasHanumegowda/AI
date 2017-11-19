@@ -52,8 +52,10 @@ def build_kb():
 def get_positivity(query):
     return '+' if query[0] == '~' else '-'
 
+
 def unify(a, b):
     pass
+
 
 if __name__ == "__main__":
     with open("input.txt", "r") as file:
