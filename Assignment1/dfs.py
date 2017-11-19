@@ -137,7 +137,7 @@ if __name__ == "__main__":
         return -1, matrix
 
 
-    f = open("input.txt", "r")
+    f = open("inp.txt", "r")
     f.readline()  # for the first line retrieval
     n = int(f.readline().strip())  # Size of square board
     p = int(f.readline().strip())  # Number of Queens

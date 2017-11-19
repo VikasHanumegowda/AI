@@ -305,7 +305,7 @@ if __name__ == "__main__":
             return -1, board
 
 
-    f = open("input.txt", "r")
+    f = open("inp.txt", "r")
     bfs_dfs = f.readline().strip()  # for the first line retrieval
     # print(bfs_dfs)
     n = int(f.readline().strip())  # Size of square board

@@ -530,7 +530,7 @@ if __name__ == "__main__":
     # matrix = [cellvalue, visited, sumvalue]
     # dictfruit = {0 : [max_value, x-coord, y-coord]}
 
-    f = open("input.txt", "r")
+    f = open("inp.txt", "r")
     n = int(f.readline().strip())
     p = int(f.readline().strip())
     t = float(f.readline().strip())
