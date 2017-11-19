@@ -137,13 +137,13 @@ class Predicate:
         self.head = None
 
 
-class Clause:
+class Stmt:
     def __init__(self):
         self.next = None
         self.num = next(cnt)
 
     def copy(self, pred=None):
-        head = Clause()
+        head = Stmt()
         current = head
         cur_origin = self.next
         for i in itertools.count():
@@ -176,7 +176,7 @@ class Clause:
             rhs.next.prev = tail
 
 
-def seperate_clauses(root):
+def seperate_stmts(root):
     clauses = []
     queue = []
 
@@ -202,9 +202,9 @@ def convert_predicate(node, prev):
     return ret
 
 
-def convert_clause_list(clause_root):
+def convert_stmt_list(clause_root):
     queue = []
-    head = Clause()
+    head = Stmt()
     current = head
 
     queue.append(clause_root)
@@ -223,27 +223,7 @@ def convert_clause_list(clause_root):
     return head
 
 
-def put_sentence(kb, line, s):
-    line = line.replace(' ', '')
-    start = sentence_parse(line)
-    clauses = seperate_clauses(start.left)
-    j = 0
-    while j < len(clauses):
-        clause_t = clauses[j]
-        j = j + 1
-        clause_list = convert_clause_list(clause_t)
-        current = clause_list.next
-        for i in itertools.count():
-            if not current:
-                break
-            substitute_constant(current, s)
-            if current.name in kb:
-                kb[current.name].append(current)
-            else:
-                kb[current.name] = []
-                kb[current.name].append(current)
-            current = current.next
-    return clause_list
+
 
 
 def substitute_constant(pred, const_map):
@@ -265,39 +245,6 @@ def substitute_constant(pred, const_map):
             else:
                 args[i] = const_map[args[i].value]
         i += 1
-
-
-def unify(clause1, clause2, subst):
-    if clause1 is clause2:
-        return subst
-    elif subst is None:
-        return None
-    elif isinstance(clause1, list):
-        if len(clause1) != 1:
-            return unify(clause1[1:], clause2[1:], unify(clause1[0], clause2[0], subst))
-        else:
-            return unify(clause1[0], clause2[0], subst)
-    elif clause2.type == 'var':
-        return unify_var(clause2, clause1, subst)
-    elif clause1.type == 'var':
-        return unify_var(clause1, clause2, subst)
-    elif clause1.type == 'const':
-        if clause1.value != clause2.value:
-            return None
-        else:
-            return subst
-    else:
-        return None
-
-
-def unify_var(var, x, s):
-    if x in s:
-        return unify(var, s[x], s)
-    elif var in s:
-        return unify(s[var], x, s)
-    else:
-        s[var] = x
-        return s
 
 
 def standardize_clause(clause, name_gen, map):
@@ -335,6 +282,27 @@ def subst(s, clause):
             i += 1
         current = current.next
 
+def put_sentence(kb, line, s):
+    line = line.replace(' ', '')
+    start = sentence_parse(line)
+    stmts = seperate_stmts(start.left)
+    j = 0
+    while j < len(stmts):
+        clause_t = stmts[j]
+        j = j + 1
+        stmt_list = convert_stmt_list(clause_t)
+        current = stmt_list.next
+        for i in itertools.count():
+            if not current:
+                break
+            substitute_constant(current, s)
+            if current.name in kb:
+                kb[current.name].append(current)
+            else:
+                kb[current.name] = []
+                kb[current.name].append(current)
+            current = current.next
+    return stmt_list
 
 def query_sentence(kb, a):
     if a.name not in kb:
@@ -410,6 +378,22 @@ def resolution(kb, clause, met, depth, abort):
         return False
 
 
+def gen_var():
+    cnt = itertools.count(1)
+    var_list = ['p', 'q', 'r', 'x', 'y', 'z']
+
+    while True:
+        list = []
+        name = ''
+        for num in range(next(cnt)):
+            num -= 1
+            list.append(var_list[num % 6])
+            num //= 6
+        for item in list:
+            name += list.pop()
+        yield name
+
+
 def factorize(clause):
     factor_set = set()
     current = clause.next
@@ -458,24 +442,37 @@ def negate_name(name):
         return name[1:]
 
 
-def gen_var():
-    cnt = itertools.count(1)
-    var_list = ['p', 'q', 'r', 'x', 'y', 'z']
+def unify(clause1, clause2, subst):
+    if clause1 is clause2:
+        return subst
+    elif subst is None:
+        return None
+    elif isinstance(clause1, list):
+        if len(clause1) != 1:
+            return unify(clause1[1:], clause2[1:], unify(clause1[0], clause2[0], subst))
+        else:
+            return unify(clause1[0], clause2[0], subst)
+    elif clause2.type == 'var':
+        return unify_var(clause2, clause1, subst)
+    elif clause1.type == 'var':
+        return unify_var(clause1, clause2, subst)
+    elif clause1.type == 'const':
+        if clause1.value != clause2.value:
+            return None
+        else:
+            return subst
+    else:
+        return None
 
-    while True:
-        list = []
-        name = ''
-        for num in range(next(cnt)):
-            num -= 1
-            list.append(var_list[num % 6])
-            num //= 6
-        for item in list:
-            name += list.pop()
-        yield name
 
-
-def read_queries(text_file):
-    return query_size, queries
+def unify_var(var, x, s):
+    if x in s:
+        return unify(var, s[x], s)
+    elif var in s:
+        return unify(s[var], x, s)
+    else:
+        s[var] = x
+        return s
 
 
 if __name__ == '__main__':
