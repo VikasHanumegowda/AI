@@ -1,7 +1,9 @@
-import parser_tree as ptree
 import copy
 import itertools
 import time
+import random
+
+import parser_tree as ptree
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -44,7 +46,7 @@ precedence = (
 
 def p_sentence_not(p):
     "sentence : NOT sentence"
-    if p[2].op == '~':
+    if p[2].operation == '~':
         p[0] = p[2].left
     else:
         p[0] = ptree.NegateOp(p[2])
@@ -106,15 +108,17 @@ def populate_parent(root):
 def sentence_parse(line):
     res = ptree.Start(yacc.parse(line))
     populate_parent(res)
-    # push_negation_inward(res)
-    # distribute_or(res)
     return res
 
+
+def infinity():
+    while True:
+        yield
 
 yacc.yacc()
 
 cnt = itertools.count()
-
+count = 9 * random.random()
 
 class Predicate:
     def copy(self):
@@ -142,32 +146,32 @@ class Stmt:
         self.next = None
         self.num = next(cnt)
 
-    def copy(self, pred=None):
+    def copy(self, predicate_arg=None):
         head = Stmt()
         current = head
-        cur_origin = self.next
-        for i in itertools.count():
-            if not cur_origin:
+        current_origin = self.next
+        for _ in infinity():
+            if not current_origin:
                 break
             temp = current
-            current = cur_origin.copy()
-            if cur_origin is pred:
-                pred = current
+            current = current_origin.copy()
+            if current_origin is predicate_arg:
+                predicate_arg = current
                 current.prev, current.head = temp, head
                 temp.next = current
-                cur_origin = cur_origin.next
+                current_origin = current_origin.next
             else:
                 current.prev, current.head = temp, head
                 temp.next = current
-                cur_origin = cur_origin.next
-        if not pred:
+                current_origin = current_origin.next
+        if not predicate_arg:
             return head
         else:
-            return head, pred
+            return head, predicate_arg
 
     def merge(self, rhs):
         current, tail = self, None
-        for i in itertools.count():
+        for _ in infinity():
             if not current:
                 break
             tail, current = current, current.next
@@ -177,20 +181,21 @@ class Stmt:
 
 
 def seperate_stmts(root):
-    clauses = []
-    queue = []
+    list = []
+    clss_from_stmt = []
 
-    queue.append(root)
-    for i in itertools.count():
-        if not queue:
+
+    list.append(root)
+    for _ in infinity():
+        if not list:
             break
-        node = queue.pop()
-        if node.op != '&':
-            clauses.append(node)
+        node = list.pop()
+        if node.operation != '&':
+            clss_from_stmt.append(node)
         else:
-            queue.append(node.left)
-            queue.append(node.right)
-    return clauses
+            list.append(node.left)
+            list.append(node.right)
+    return clss_from_stmt
 
 
 def convert_predicate(node, prev):
@@ -208,11 +213,11 @@ def convert_stmt_list(clause_root):
     current = head
 
     queue.append(clause_root)
-    for i in itertools.count():
+    for _ in infinity():
         if not queue:
             break
         node = queue.pop()
-        if node.op != '|':
+        if node.operation != '|':
             temp = current
             current = convert_predicate(node, temp)
             current.head = head
@@ -221,9 +226,6 @@ def convert_stmt_list(clause_root):
             queue.append(node.left)
             queue.append(node.right)
     return head
-
-
-
 
 
 def substitute_constant(pred, const_map):
@@ -249,7 +251,7 @@ def substitute_constant(pred, const_map):
 
 def standardize_clause(clause, name_gen, map):
     current = clause.next
-    for i in itertools.count():
+    for _ in infinity():
         if not current:
             break
         standardize_pred(current, name_gen, map)
@@ -271,7 +273,7 @@ def standardize_pred(pred, name_gen, map):
 
 def subst(s, clause):
     current = clause.next
-    for i in itertools.count():
+    for _ in infinity():
         if not current:
             break
         args = current.args
@@ -281,6 +283,7 @@ def subst(s, clause):
                 args[i] = s[args[i]]
             i += 1
         current = current.next
+
 
 def put_sentence(kb, line, s):
     line = line.replace(' ', '')
@@ -292,17 +295,18 @@ def put_sentence(kb, line, s):
         j = j + 1
         stmt_list = convert_stmt_list(clause_t)
         current = stmt_list.next
-        for i in itertools.count():
+        for _ in infinity():
             if not current:
                 break
             substitute_constant(current, s)
             if current.name in kb:
-                kb[current.name].append(current)
+                pass
             else:
                 kb[current.name] = []
-                kb[current.name].append(current)
+            kb[current.name].append(current)
             current = current.next
     return stmt_list
+
 
 def query_sentence(kb, a):
     if a.name not in kb:
@@ -382,7 +386,7 @@ def gen_var():
     cnt = itertools.count(1)
     var_list = ['p', 'q', 'r', 'x', 'y', 'z']
 
-    while True:
+    while 0 in [0, 1, 2, 3, 4, 5, 6]:
         list = []
         name = ''
         for num in range(next(cnt)):
@@ -412,7 +416,7 @@ def convert_clause(clause):
     l = []
     current = clause.next
 
-    for i in itertools.count():
+    for _ in infinity():
         if not current:
             break
         l.append(predicate_to_tuple(current))

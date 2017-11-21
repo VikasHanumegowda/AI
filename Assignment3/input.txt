@@ -1,14 +1,51 @@
-1
-P(Joe,Mary)
 2
-P(x,y) | P(a,b) | ~A(x)
-A(y) | ~P(c,d)
+~Date(Mary,John)
+Date(Mary,Bill)
+11
+~Buy(x)|Rabbit(y)|Grocery(y)
+~Buy(x)|Owns(x,y)
+~Dog(x)|Rabbit(y)
+~Dog(x)|Chase(x,y)
+Buy(Mary)
+~Owns(x,y)|~Rabbit(y)|~Rabbit(w)|~Chase(z,w)|Hates(x,z)
+Dog(x)
+Owns(John,x)
+~Owns(y,z) |~Hates(x,z)|~Date(x,y)
+Grocery(G)
+~Owns(Mary,G)
 
 1
 B(John)
 2
 A(x)
 ~A(x) | B(John)
+1
+B(John)
+2
+A(x)
+~A(x) | B(John)
+2
+~Date(Mary,John)
+Date(Mary,Bill)
+11
+~Buy(x)|Rabbit(y)|Grocery(y)
+~Buy(x)|Owns(x,y)
+~Dog(x)|Rabbit(y)
+~Dog(x)|Chase(x,y)
+Buy(Mary)
+~Owns(x,y)|~Rabbit(y)|~Rabbit(w)|~Chase(z,w)|Hates(x,z)
+Dog(x)
+Owns(John,x)
+~Owns(y,z) |~Hates(x,z)|~Date(x,y)
+Grocery(G)
+~Owns(Mary,G)
+1
+P(Joe,Mary)
+2
+P(x,y) | P(a,b) | ~A(x)
+A(y) | ~P(c,d)
+
+
 
 2
 Ancestor(Liz,Billy)
