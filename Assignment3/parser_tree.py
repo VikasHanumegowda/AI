@@ -1,7 +1,7 @@
-class BinOp:
-    def __init__(self, left, operation_p, right, parent=None):
+class TwoOp:
+    def __init__(self, left, op_p, right, parent=None):
         self.type = "binop"
-        self.operation = operation_p
+        self.op = op_p
         self.parent = parent
         self.left = left
         self.right = right
@@ -11,7 +11,7 @@ class Predicate():
     def __init__(self, name, children=None):
         self.type = "pred"
         self.name = name
-        self.operation = "pred"
+        self.op = "pred"
         if children:  # list of children
             self.children = children
         else:
@@ -24,10 +24,10 @@ class Variable():
         self.value = value
 
 
-class NegateOp:
+class MinusOp:
     def __init__(self, left, parent=None):
         self.type = "not"
-        self.operation = "~"
+        self.op = "~"
         self.parent = parent
         self.left = left
         self.right = None
@@ -49,6 +49,6 @@ class Constant():
 class Start:  # start of a sentence
     def __init__(self, left):
         self.type = "start"
-        self.operation = "start"
+        self.op = "start"
         self.left = left
         self.right = None
