@@ -1,6 +1,7 @@
 import copy
 import itertools
 import time
+
 import random
 
 import parser_tree as ptree
@@ -21,18 +22,23 @@ t_LEFT_P = r'\('
 t_RIGHT_P = r'\)'
 
 
+def infinity():
+    while True:
+        yield 1
+
+
 def t_PRED(t):
-    r'[A-Z][a-zA-Z]*\('
-    return t
-
-
-def t_CONST(t):
-    r'[A-Z_][a-zA-Z0-9_]*'
+    r'[A-Z][a-zA-Z0-9]*\('
     return t
 
 
 def t_VAR(t):
     r'[a-z]'
+    return t
+
+
+def t_CONST(t):
+    r'[A-Z][a-zA-Z0-9]*'
     return t
 
 
@@ -46,15 +52,15 @@ precedence = (
 
 def p_sentence_not(p):
     "sentence : NOT sentence"
-    if p[2].operation == '~':
+    if p[2].op == '~':
         p[0] = p[2].left
     else:
-        p[0] = ptree.NegateOp(p[2])
+        p[0] = ptree.MinusOp(p[2])
 
 
 def p_sentence_op(p):
     "sentence : sentence OR sentence"
-    p[0] = ptree.BinOp(p[1], p[2], p[3])
+    p[0] = ptree.TwoOp(p[1], p[2], p[3])
 
 
 def p_sentence_nested(p):
@@ -63,13 +69,13 @@ def p_sentence_nested(p):
 
 
 def p_literal(p):
-    "literal : PRED term_list RIGHT_P"
+    "lit : PRED term_list RIGHT_P"
     p[0] = ptree.Predicate(p[1][0:-1])
     p[0].children = p[2].children
 
 
 def p_sentence_literal(p):
-    "sentence : literal"
+    "sentence : lit"
     p[0] = p[1]
 
 
@@ -115,10 +121,12 @@ def infinity():
     while True:
         yield
 
+
 yacc.yacc()
 
 cnt = itertools.count()
 count = 9 * random.random()
+
 
 class Predicate:
     def copy(self):
@@ -126,7 +134,7 @@ class Predicate:
         i = 0
         while i < len(self.args):
             arg = self.args[i]
-            if arg.type == 'var':
+            if arg.type == 'var_type':
                 new_args.append(copy.copy(arg))
             else:
                 new_args.append(arg)
@@ -150,7 +158,7 @@ class Stmt:
         head = Stmt()
         current = head
         current_origin = self.next
-        for _ in infinity():
+        for x in infinity():
             if not current_origin:
                 break
             temp = current
@@ -171,7 +179,7 @@ class Stmt:
 
     def merge(self, rhs):
         current, tail = self, None
-        for _ in infinity():
+        for x in infinity():
             if not current:
                 break
             tail, current = current, current.next
@@ -184,13 +192,12 @@ def seperate_stmts(root):
     list = []
     clss_from_stmt = []
 
-
     list.append(root)
     for _ in infinity():
         if not list:
             break
         node = list.pop()
-        if node.operation != '&':
+        if node.op != '&':
             clss_from_stmt.append(node)
         else:
             list.append(node.left)
@@ -217,7 +224,7 @@ def convert_stmt_list(clause_root):
         if not queue:
             break
         node = queue.pop()
-        if node.operation != '|':
+        if node.op != '|':
             temp = current
             current = convert_predicate(node, temp)
             current.head = head
@@ -236,7 +243,7 @@ def substitute_constant(pred, const_map):
 
     i = 0
     while i < len(args):
-        if args[i].type == 'var':
+        if args[i].type == 'var_type':
             if args[i].value not in var_map:
                 var_map[args[i].value] = args[i]
             else:
@@ -254,15 +261,15 @@ def standardize_clause(clause, name_gen, map):
     for _ in infinity():
         if not current:
             break
-        standardize_pred(current, name_gen, map)
+        standardise_pred(current, name_gen, map)
         current = current.next
 
 
-def standardize_pred(pred, name_gen, map):
+def standardise_pred(pred, name_gen, map):
     l = pred.args
     i = 0
     while i < len(l):
-        if l[i].type == 'var':
+        if l[i].type == 'var_type':
             if l[i].value in map:
                 l[i] = map[l[i].value]
             else:
@@ -273,7 +280,7 @@ def standardize_pred(pred, name_gen, map):
 
 def subst(s, clause):
     current = clause.next
-    for _ in infinity():
+    for count_inf in infinity():
         if not current:
             break
         args = current.args
@@ -320,14 +327,14 @@ def query_sentence(kb, a):
         else:
             to_resolve, to_unify = pred.head.copy(pred)
             var_name_gen = gen_var()
-            clause_resolve(to_resolve, to_unify, a, var_name_gen)
+            resolve_clause_for_kb(to_resolve, to_unify, a, var_name_gen)
             abort_time = time.time() + 2
             if to_resolve.next == None or resolution(kb, to_resolve, set(), 0, abort_time):
                 return True
     return False
 
 
-def clause_resolve(to_resolve, to_unify, alpha, name_gen):
+def resolve_clause_for_kb(to_resolve, to_unify, alpha, name_gen):
     standardize_clause(to_resolve, name_gen, {})
     sub = unify(to_unify.args, alpha.args, {})
     to_unify.prev.next = to_unify.next
@@ -367,7 +374,7 @@ def resolution(kb, clause, met, depth, abort):
         var_name_gen = gen_var()
 
         standardize_clause(new_clause, var_name_gen, {})
-        s = clause_resolve(to_resolve, to_unify, new_term, var_name_gen)
+        s = resolve_clause_for_kb(to_resolve, to_unify, new_term, var_name_gen)
 
         new_term.prev.next = new_term.next
         if new_term.next:
@@ -382,18 +389,25 @@ def resolution(kb, clause, met, depth, abort):
         return False
 
 
+def negate_name(name):
+    if name[0] != '-':
+        return '-' + name
+    else:
+        return name[1:]
+
+
 def gen_var():
     cnt = itertools.count(1)
-    var_list = ['p', 'q', 'r', 'x', 'y', 'z']
+    var_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 
     while 0 in [0, 1, 2, 3, 4, 5, 6]:
         list = []
         name = ''
         for num in range(next(cnt)):
             num -= 1
-            list.append(var_list[num % 6])
-            num //= 6
-        for item in list:
+            list.append(var_list[num % 7])
+            num //= 7
+        for counter in list:
             name += list.pop()
         yield name
 
@@ -412,10 +426,19 @@ def factorize(clause):
         current = current.next
 
 
+def unify_var(var, x, s):
+    if x in s:
+        return unify(var, s[x], s)
+    elif var in s:
+        return unify(s[var], x, s)
+    else:
+        s[var] = x
+        return s
+
+
 def convert_clause(clause):
     l = []
     current = clause.next
-
     for _ in infinity():
         if not current:
             break
@@ -426,24 +449,17 @@ def convert_clause(clause):
 
 def predicate_to_tuple(pred):
     l = []
-    count = 0
+    counter_for_infinity = 0
     l.append(pred.name)
     j = 0
     while j < len(pred.args):
         arg = pred.args[j]
-        if arg.type != 'var':
+        if arg.type != 'var_type':
             l.append(arg)
         else:
             l.append('v')
         j = j + 1
     return tuple(l)
-
-
-def negate_name(name):
-    if name[0] != '-':
-        return '-' + name
-    else:
-        return name[1:]
 
 
 def unify(clause1, clause2, subst):
@@ -456,9 +472,9 @@ def unify(clause1, clause2, subst):
             return unify(clause1[1:], clause2[1:], unify(clause1[0], clause2[0], subst))
         else:
             return unify(clause1[0], clause2[0], subst)
-    elif clause2.type == 'var':
+    elif clause2.type == 'var_type':
         return unify_var(clause2, clause1, subst)
-    elif clause1.type == 'var':
+    elif clause1.type == 'var_type':
         return unify_var(clause1, clause2, subst)
     elif clause1.type == 'const':
         if clause1.value != clause2.value:
@@ -469,40 +485,35 @@ def unify(clause1, clause2, subst):
         return None
 
 
-def unify_var(var, x, s):
-    if x in s:
-        return unify(var, s[x], s)
-    elif var in s:
-        return unify(s[var], x, s)
-    else:
-        s[var] = x
-        return s
-
-
 if __name__ == '__main__':
     kb = {}
     sub = {}
-    output = open('output.txt', 'w')
-    with open('input.txt', 'r') as inp:
-        queries = []
-        query_size = int(inp.readline())
-        for i in range(query_size):
-            queries.append(inp.readline().strip())
-        kb_size = int(inp.readline())
-        kb_count = 0
-        while kb_count < kb_size:
-            st = inp.readline().strip('\n')
-            put_sentence(kb, st, sub)
-            kb_count += 1
+    with open('output.txt', 'w') as output:
+        with open('input.txt', 'r') as inp:
+            queries = []
+            query_size = int(inp.readline())
+            print(query_size)
+            for i in range(query_size):
+                query = inp.readline().strip()
+                queries.append(query)
+            size_of_kb = int(inp.readline())
 
-        for query in queries:
-            query = query.replace(' ', '')
-            start = sentence_parse(query)
-            query_pred = convert_predicate(start.left, None)
-            substitute_constant(query_pred, sub)
+            kb_c = 0
+            while kb_c < size_of_kb:
+                if kb_c == 0:
+                    print(size_of_kb)
+                st = inp.readline().strip('\n')
+                print(st)
+                put_sentence(kb, st, sub)
+                kb_c += 1
 
-            if query_sentence(kb, query_pred):
-                output.write('TRUE\n')
-            else:
-                output.write('FALSE\n')
-    output.close()
+            for query in queries:
+                query = query.replace(' ', '')
+                start = sentence_parse(query)
+                query_pred = convert_predicate(start.left, None)
+                substitute_constant(query_pred, sub)
+
+                if query_sentence(kb, query_pred):
+                    output.write('TRUE\n')
+                else:
+                    output.write('FALSE\n')
