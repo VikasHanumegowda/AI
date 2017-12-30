@@ -4,6 +4,16 @@ import time
 from collections import deque
 from copy import deepcopy
 
+
+class Timer:
+    def __enter__(self):
+        self.start = time.time()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end = time.time()
+        print("%30.20f" % (self.end - self.start))
+
+
 if __name__ == "__main__":
 
     def print_matrix(matrix):
@@ -41,28 +51,28 @@ if __name__ == "__main__":
         for x in range(col, -1, -1):  # leftside
             if matrix[row][x] == 'T':
                 break
-            if type(matrix[row][x]) != str and x != col:  # to sides
+            if not isinstance(matrix[row][x], str) and x != col:  # to sides
                 matrix[row][x] += 1
         for x in range(col, n):  # rightside
             if matrix[row][x] == 'T':
                 break
-            if type(matrix[row][x]) != str and x != col:
+            if not isinstance(matrix[row][x], str) and x != col:
                 matrix[row][x] += 1
         for x in range(row, -1, -1):  # top
             if matrix[x][col] == 'T':
                 break
-            if type(matrix[x][col]) != str and x != row:
+            if not isinstance(matrix[x][col], str) and x != row:
                 matrix[x][col] += 1
         for x in range(row, n):  # bottom
             if matrix[x][col] == 'T':
                 break
-            if type(matrix[x][col]) != str and x != row:
+            if not isinstance(matrix[x][col], str) and x != row:
                 matrix[x][col] += 1
         x, y = col, row
         while n > x >= 0 and n > y >= 0:  # to lower-left end
             if matrix[y][x] == 'T':
                 break
-            if type(matrix[y][x]) == int:
+            if isinstance(matrix[y][x], int):
                 matrix[y][x] += 1
             y += 1
             x -= 1
@@ -70,7 +80,7 @@ if __name__ == "__main__":
         while n > x >= 0 and n > y >= 0:  # to upper-right end
             if matrix[y][x] == 'T':
                 break
-            if type(matrix[y][x]) == int:
+            if isinstance(matrix[y][x], int):
                 matrix[y][x] += 1
             y -= 1
             x += 1
@@ -78,7 +88,7 @@ if __name__ == "__main__":
         while n > x >= 0 and n > y >= 0:  # to upper-left end
             if matrix[y][x] == 'T':
                 break
-            if type(matrix[y][x]) == int:
+            if isinstance(matrix[y][x], int):
                 matrix[y][x] += 1
             y -= 1
             x -= 1
@@ -86,7 +96,7 @@ if __name__ == "__main__":
         while n > x >= 0 and n > y >= 0:  # to lower-right end
             if matrix[y][x] == 'T':
                 break
-            if type(matrix[y][x]) == int:
+            if isinstance(matrix[y][x], int):
                 matrix[y][x] += 1
             y += 1
             x += 1
@@ -113,8 +123,8 @@ if __name__ == "__main__":
             return p, deepcopy(q.pop()[2])
         queens_ret = 0
         timeout = 0
-        while len(q) > 0:
-            if (time.time() - start) >= 280 :
+        while q:
+            if (time.time() - start) >= 280:
                 timeout = 1
                 break
             row, col, matrix, nqueens1 = q.pop()
@@ -139,7 +149,7 @@ if __name__ == "__main__":
                 queens_ret = nqueens1
             if queens_ret == p:
                 return queens_ret, matrix
-        if timeout ==1:
+        if timeout == 1:
             return -1, matrix
         return -1, matrix
 
@@ -150,8 +160,8 @@ if __name__ == "__main__":
         if p == 0:
             return p, deepcopy(q.pop()[2])
         queens_ret = 0
-        while len(q) > 0:
-            if (time.time() - start) >= 280 :
+        while q:
+            if (time.time() - start) >= 280:
                 timeout = 1
                 break
             row, col, matrix, nqueens1 = q.popleft()
@@ -162,7 +172,7 @@ if __name__ == "__main__":
                 if nqueens1 == p:
                     return nqueens1, deepcopy(matrix)
                 q = find_possible_children(row, n, matrix, q, nqueens1)
-                if len(q) == 0:
+                if not q:
                     if nqueens1 < p:
                         for x in range(n):
                             for y in range(n):
@@ -260,7 +270,7 @@ if __name__ == "__main__":
             tot_energy += calc_energy(x[0], x[1], board)
         prev_energy = tot_energy
         nn = 1.05
-        timeout =0
+        timeout = 0
         while True:
             if (time.time() - start) >= 280:
                 timeout = 1
@@ -273,7 +283,7 @@ if __name__ == "__main__":
             row = random.randint(0, n - 1)
             col = random.randint(0, n - 1)
             new_tup = tuple([row, col])
-            while new_tup in list_of_pos or type(board[row][col]) != int:
+            while new_tup in list_of_pos or not isinstance(board[row][col], int):
                 row = random.randint(0, n - 1)
                 col = random.randint(0, n - 1)
                 new_tup = tuple([row, col])
@@ -315,42 +325,42 @@ if __name__ == "__main__":
         for x in range(n):
             matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
         start = time.time()
+        with Timer():
+            q1 = deque()
+            numberq = []
+            found = 0
+            with open("output.txt", "w") as output:
+                for x in range(2):
+                    matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]  # rotate matrix and process
 
-        q1 = deque()
-        numberq = []
-        found = 0
-        with open("output.txt", "w") as output:
-            for x in range(2):
-                matrix1 = [[i for i in j] for j in rotate(matrix1, 90)]  # rotate matrix and process
+                    for xx in range(n):  # first column possible positions of Q
+                        if matrix1[0][xx] == 0:
+                            q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
+                    nqueens1 = 0
 
-                for xx in range(n):  # first column possible positions of Q
-                    if matrix1[0][xx] == 0:
-                        q1.append(tuple([0, xx, deepcopy(matrix1), 0]))
-                nqueens1 = 0
+                    if bfs_dfs == "DFS":
+                        ret_nq, matrix = dfs(q1, p)
+                    elif bfs_dfs == "BFS":
+                        ret_nq, matrix = bfs(q1, p)
+                    elif bfs_dfs == "SA":
+                        ret_nq, matrix = sa(n, p, matrix1)
 
-                if bfs_dfs == "DFS":
-                    ret_nq, matrix = dfs(q1, p)
-                elif bfs_dfs == "BFS":
-                    ret_nq, matrix = bfs(q1, p)
-                elif bfs_dfs == "SA":
-                    ret_nq, matrix = sa(n, p, matrix1)
+                    if x == 0:
+                        matrix = deepcopy(rotate(matrix, 270))
+                    elif x == 1:
+                        matrix = deepcopy(rotate(matrix, 180))
 
-                if x == 0:
-                    matrix = deepcopy(rotate(matrix, 270))
-                elif x == 1:
-                    matrix = deepcopy(rotate(matrix, 180))
+                    if ret_nq == p:
+                        output.write("OK\n")
+                        print_output(matrix, output)
+                        found = 1
+                        break
 
-                if ret_nq == p:
-                    output.write("OK\n")
-                    print_output(matrix, output)
-                    found = 1
-                    break
+                    numberq.append([ret_nq, matrix])
 
-                numberq.append([ret_nq, matrix])
-
-                if bfs_dfs == "SA":
-                    break
-            if found == 0:
-                if all([xx[0] == -1 for xx in numberq]):
-                    output.write("FAIL\n")
-            end = time.time()
+                    if bfs_dfs == "SA":
+                        break
+                if found == 0:
+                    if all([xx[0] == -1 for xx in numberq]):
+                        output.write("FAIL\n")
+                # end = time.time()

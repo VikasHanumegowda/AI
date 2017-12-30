@@ -462,7 +462,7 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
                 # print()
     matrix = deepcopy(empty)
     dict_fruit = deque(reversed(sorted(dict_fruit, key=lambda h: h[0])))
-    if len(dict_fruit) > 0:
+    if dict_fruit:
         temp_mat = apply_gravity(dict_fruit[0][3])
     else:
         temp_mat = deepcopy(matrix)
@@ -475,14 +475,14 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
             return temp_mat, my_value - opp_value, dict_fruit[0][1], dict_fruit[0][2]
         else:
             return my_value - opp_value
-    if len(dict_fruit) == 0 or depth == 4:
+    if not dict_fruit or depth == 4:
         return my_value - opp_value
     mat_ret = []
     x_used = y_used = 0
     if is_max_player:
         best_value = -maxsize
         x_used = y_used = 0
-        while len(dict_fruit) > 0:
+        while dict_fruit:
             fruit_to_remove = dict_fruit.popleft()
             my_value += fruit_to_remove[0] ** 2
             matrix1 = apply_gravity(remove_fruits(matrix, fruit_to_remove[1], fruit_to_remove[2], n))
@@ -505,7 +505,7 @@ def my_game(n, matrix, alpha, beta, is_max_player, my_value, opp_value, depth, f
                 break
     else:
         best_value = maxsize
-        while len(dict_fruit) > 0:
+        while dict_fruit:
             fruit_to_remove = dict_fruit.popleft()
             opp_value += fruit_to_remove[0] ** 2
             matrix1 = apply_gravity(remove_fruits(matrix, fruit_to_remove[1], fruit_to_remove[2], n))
