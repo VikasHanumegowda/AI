@@ -530,36 +530,30 @@ if __name__ == "__main__":
     # matrix = [cellvalue, visited, sumvalue]
     # dictfruit = {0 : [max_value, x-coord, y-coord]}
 
-    f = open("inp.txt", "r")
-    n = int(f.readline().strip())
-    p = int(f.readline().strip())
-    t = float(f.readline().strip())
-    # print(n)
-    # print(p)
-    # print(t)
-    matrix = []
-    for i in range(n):
-        line = []
-        for x in f.readline().strip():
-            if x.isdigit():
-                line.append([int(x), 0, 1])
-            else:
-                line.append([x, 0, 1])
-        matrix.append(line)
-    empty = deepcopy(matrix)
-    # print_matrix_only_value(empty)
-    start = time()
-    before_game = time()
-    matrix, value, xv, yv = my_game(n, empty, -maxsize, maxsize, True, 0, 0, 0, True, before_game - start, t)
-    end = time()
-    output = open("output.txt", "w")
-    output.write(chr(ord('A') + yv))
-    output.write(str(1 + xv))
-    output.write("\n")
-    print()
-    # print_matrix_only_value(matrix)
-    print(end - start)
-    print(value)
-    print_output(matrix, output)
-    f.close()
-    output.close()
+    with open("inp.txt", "r") as f:
+        n = int(f.readline().strip())
+        p = int(f.readline().strip())
+        t = float(f.readline().strip())
+
+        matrix = []
+        for i in range(n):
+            line = []
+            for x in f.readline().strip():
+                if x.isdigit():
+                    line.append([int(x), 0, 1])
+                else:
+                    line.append([x, 0, 1])
+            matrix.append(line)
+
+        empty = deepcopy(matrix)
+
+        start = time()
+        before_game = time()
+        matrix, value, xv, yv = my_game(n, empty, -maxsize, maxsize, True, 0, 0, 0, True, before_game - start, t)
+        end = time()
+
+        with open("output.txt", "w") as output:
+            output.write(chr(ord('A') + yv))
+            output.write(str(1 + xv))
+            output.write("\n")
+            print_output(matrix, output)
