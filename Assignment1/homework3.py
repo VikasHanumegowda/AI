@@ -2,17 +2,27 @@ import math
 import random
 import time
 from collections import deque
+from contextlib import contextmanager
 from copy import deepcopy
 
 
-class Timer:
-    def __enter__(self):
-        self.start = time.time()
+#
+# class Timer:
+#     def __enter__(self):
+#         self.start = time.time()
+#
+#     def __exit__(self, exc_type, exc_val, exc_tb):
+#         self.end = time.time()
+#         print("%30.20f" % (self.end - self.start))
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.end = time.time()
-        print("%30.20f" % (self.end - self.start))
-
+@contextmanager
+def my_timer():
+    try:
+        start = time.time()
+        yield start
+    finally:
+        end = time.time()
+        print("%020.15f" % (end - start))
 
 if __name__ == "__main__":
 
@@ -325,7 +335,8 @@ if __name__ == "__main__":
         for x in range(n):
             matrix1.append([int(x) if x == '0' else 'T' for x in f.readline().strip()])
         start = time.time()
-        with Timer():
+        # with Timer():
+        with my_timer():
             q1 = deque()
             numberq = []
             found = 0
